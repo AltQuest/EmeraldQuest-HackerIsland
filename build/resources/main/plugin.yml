@@ -1,0 +1,37 @@
+name: EmeraldQuest
+version: 2.0
+author: The EmeraldQuest Dev Team
+main: com.emeraldquest.emeraldquest.EmeraldQuest
+description: The EmeraldQuest Open Source Project
+commands:
+  clan:
+    description: "used for creating, joining, operating clans"
+    usage: "/clan <new|invite|kick|join|leave>"
+  transfer:
+    description: "Sends your Emeralds to another Player"
+    usage: "/transfer <amount> <Player>"
+  ban:
+    description: "Adds player to the ban list"
+    usage: "/ban <player>"
+  unban:
+    description: "Removes player from the ban list"
+    usage: "/unban <player>"
+  banlist:
+    description: "Prints the list of banned players"
+    usage: "/banlist"
+  spectate:
+    description: "Allows moderators to spectate players' actions"
+    usage: "/spectate <player>"
+  mod:
+    description: "Utility to add/remove/list moderators"
+    usage: "/mod <add|remove|list>"
+  land:
+    description: "Claim or manage land plots"
+    usage: "/land <claim|permission>"
+  emergencystop:
+    description: "Stops the server cleanly in case of emergency"
+    usage: "/emergencystop [reason]"
+  killAllVillagers:
+    description: "Kills all the villagers"
+    usage: "/killAllVillagers"
+

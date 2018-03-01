@@ -1,0 +1,5 @@
+superuser: null
+# commented until <walletAmount> gets a class getter
+welcomeMessage:
+   <bold><green>Welcome to EmeraldQuest, the server that runs on Emeralds! ^_^<reset>
+

@@ -1,0 +1,18 @@
+spigot:
+  container_name: emeraldquest
+  environment:
+    - EMERLADQUEST_ENV=development
+    - DENOMINATION_NAME=Ems
+    - LAND_PRICE=10
+    - ADMIN_UUID=CHANGEME
+    - SET_PvP=true
+  build: .
+  volumes:
+    - "./build/libs/:/spigot/plugins"
+    - ".:/emeraldquest"
+  ports:
+    - "25565:25565"
+  links:
+    - redis
+redis:
+  image: redis
