@@ -72,6 +72,8 @@ public class EntityEvents implements Listener {
     private static final List<EntityType> PROTECTED_ENTITIES = Arrays.asList(EntityType.ARMOR_STAND, EntityType.ITEM_FRAME,
             EntityType.PAINTING, EntityType.ENDER_CRYSTAL);
     
+	private int pvar = 0;    //this is the PvP variable to help display when in PvP zone
+	
     public EntityEvents(EmeraldQuest plugin) {
         emeraldQuest = plugin;
 
@@ -228,50 +230,42 @@ public class EntityEvents implements Listener {
 
 
     @EventHandler
-    public void onPlayerMove(PlayerMoveEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+     public void onPlayerMove(PlayerMoveEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+
+	if((emeraldQuest.isPvP(event.getPlayer().getLocation())==true)&&(pvar==0)) {event.getPlayer().sendMessage(ChatColor.RED+"IN PVP ZONE");pvar++;}
         if(event.getFrom().getChunk()!=event.getTo().getChunk()) {
+		pvar = 0;
+            emeraldQuest.updateScoreboard(event.getPlayer());
             if(!event.getFrom().getWorld().getName().endsWith("_nether") && !event.getFrom().getWorld().getName().endsWith("_end")) {
-                // announce new area
+		
                 int x1=event.getFrom().getChunk().getX();
                 int z1=event.getFrom().getChunk().getZ();
 
                 int x2=event.getTo().getChunk().getX();
                 int z2=event.getTo().getChunk().getZ();
-                String name1="the wilderness";
-                String name2="the wilderness";
-                String key1="chunk"+x1+","+z1+"name";
-                String key2="chunk"+x2+","+z2+"name";
-                if(emeraldQuest.landIsClaimed(event.getFrom())) {
-                    if(emeraldQuest.land_name_cache.containsKey(key1)) {
-                        name1=emeraldQuest.land_name_cache.get(key1);
-                    } else {
-                        name1=EmeraldQuest.REDIS.get(key1)!= null ? EmeraldQuest.REDIS.get(key1) : "the wilderness";
-                        emeraldQuest.land_name_cache.put(key1,name1);
-                    }
-                }
-                if(emeraldQuest.landIsClaimed(event.getTo())) {
-                    if(emeraldQuest.land_name_cache.containsKey(key2)) {
-                        name2=emeraldQuest.land_name_cache.get(key2);
-                    } else {
-                        name2=EmeraldQuest.REDIS.get(key2)!= null ? EmeraldQuest.REDIS.get(key2) : "the wilderness";
-                        emeraldQuest.land_name_cache.put(key2,name2);
-                    }
-                }
 
+                String name1=EmeraldQuest.REDIS.get("chunk"+x1+","+z1+"name")!= null ? EmeraldQuest.REDIS.get("chunk"+x1+","+z1+"name") : "the wilderness";
+                String name2=EmeraldQuest.REDIS.get("chunk"+x2+","+z2+"name")!= null ? EmeraldQuest.REDIS.get("chunk"+x2+","+z2+"name") : "the wilderness";
 
-                if(!name1.equals(name2)) {
-                    if(name2.equals("the wilderness")){
-                        event.getPlayer().sendMessage(ChatColor.GRAY+"[ "+name2+" ]");
-                    }else{
-                        event.getPlayer().sendMessage(ChatColor.YELLOW+"[ "+name2+" ]");
-                    }
-                }
-            }
-        }
+                if(name1==null) name1="the wilderness";
+                 if(name2==null) name2="the wilderness";
 
+		
+		
+                 if(!name1.equals(name2)) {
+                     if(name2.equals("the wilderness")){
+                         event.getPlayer().sendMessage(ChatColor.GRAY+"[ "+name2+" ]");
+                     }else{
+		
+                         event.getPlayer().sendMessage(ChatColor.YELLOW+"[ "+name2+" ]");			
+			
+                     }
+                 }
+             }
+
+	}
 
     }
-
     @EventHandler
     public void itemConsume(PlayerItemConsumeEvent event) {
         ItemStack item = event.getItem();
