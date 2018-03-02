@@ -19,7 +19,7 @@ The [EmeraldQuest](https://emeraldquest.co/) server and every player has a fair 
 ![The playercan see it's emerald balance](https://media.discordapp.net/attachments/417463752301215770/418990994692898826/EmeraldQuest03.png?width=400&height=225)
 
 ## And there's loot!
-Every time a player kills an enemy (mob) there is a chance to get loot. If that is the case the server makes a transaction directly from the server address to the player address and the player is notified.
+Every time a player kills an enemy (mob) there is a chance to get loot. If that is the case the server creates emeralds and gives to the player and the player is notified.
 ![A player got loot](https://media.discordapp.net/attachments/417463752301215770/418991008492290048/EmeraldQuest04.png?width=400&height=225)
 
 ## Everyone can send emerald anywhere
