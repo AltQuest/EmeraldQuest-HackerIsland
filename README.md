@@ -9,11 +9,11 @@ play.emeraldquest.co
 ```
 
 # Important Note
-This server is still under development, and bugs can, and most likely will, happen. Please report any bugs to a moderator promptly, to ensure they are fixed. Also note that your wallet is not guaranteed, and you may experience issues with your balance. For this reason, it is highly recommended that you do not move large amounts. In addition, if you are caught breaking rules and are banned, you forfeit your access to your server resources, and all land tied to it. With this said, rules are non-negotiable, and will be strictly enforced. This server is a fair server, and anyone abusing any system set in place will be punished. Please play fair, have fun, and enjoy the server
+This server is still under development, and bugs can, and most likely will, happen. Please report any bugs to a moderator promptly, to ensure they are fixed. Also note that your balance is not guaranteed, and you may experience issues with your balance. For this reason, it is highly recommended that you do not move large amounts. In addition, if you are caught breaking rules and are banned, you forfeit your access to your server resources, and all land tied to it. With this said, rules are non-negotiable, and will be strictly enforced. This server is a fair server, and anyone abusing any system set in place will be punished. Please play fair, have fun, and enjoy the server
 
 
 # How it works?
-## Everyone is a emerald wallet
+## Everyone uses Emeralds!
 The [EmeraldQuest](https://emeraldquest.co/) server and every player has a fair chance. Any player can receive and send emerald to any player inside the game. This is useful for buying materials, selling crafts, trading, tipping, etcetera.
 ![A player just joined the server](https://media.discordapp.net/attachments/417463752301215770/418990976229572608/EmeraldQuest02.png?width=400&height=225)
 ![The playercan see it's emerald balance](https://media.discordapp.net/attachments/417463752301215770/418990994692898826/EmeraldQuest03.png?width=400&height=225)
