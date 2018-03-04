@@ -415,7 +415,7 @@ public class  EmeraldQuest extends JavaPlugin {
             boolean hasNonAlpha = name.matches("^.*[^a-zA-Z0-9 _].*$");
             if (!hasNonAlpha) {
                 // 16 characters max
-                if (name.length() <= 32) {
+                if (name.length() <= 16) {
 
 
                     if (name.equalsIgnoreCase("the wilderness")) {
@@ -437,6 +437,9 @@ public class  EmeraldQuest extends JavaPlugin {
 
                                         EmeraldQuest.REDIS.set("chunk" + x + "," + z + "owner", player.getUniqueId().toString());
                                         EmeraldQuest.REDIS.set("chunk" + x + "," + z + "name", name);
+					land_owner_cache=new HashMap();
+                                            land_name_cache=new HashMap();
+                                            land_unclaimed_cache=new HashMap();
                                         player.sendMessage(ChatColor.GREEN + "Congratulations! You're now the owner of " + name + "!");
                                         player.sendMessage(ChatColor.YELLOW + "Price was "+(LAND_PRICE)+" Emeralds");
                                         if (emeraldQuest.messageBuilder != null) {
@@ -475,10 +478,10 @@ public class  EmeraldQuest extends JavaPlugin {
                             // Abandon land
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "owner");
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "name");
-                        } else if (name.startsWith("transfer ") && name.length() >=1) {
+                        } else if (name.startsWith("transfer ") && name.length() > 9) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
-                            final String newOwner = name.substring(32);
+                            final String newOwner = name.substring(9);
                             player.sendMessage(ChatColor.YELLOW + "Transfering land to " + newOwner + "...");
 
                             if (REDIS.exists("uuid:" + newOwner)) {
@@ -498,7 +501,7 @@ public class  EmeraldQuest extends JavaPlugin {
                         }
                     }
                 } else {
-                    player.sendMessage(ChatColor.RED+"Your land name must be 32 characters max");
+                    player.sendMessage(ChatColor.RED+"Your land name must be 16 characters max");
                 }
             } else {
                 player.sendMessage(ChatColor.RED+"Your land name must contain only letters and numbers");
@@ -523,18 +526,16 @@ public class  EmeraldQuest extends JavaPlugin {
         }
 
     }
-    public boolean canBuild(Location location, Player player) {
-        // returns true if player has permission to build in location
+public boolean canBuild(Location location, Player player) {
+         // returns true if player has permission to build in location
         // TODO: Find out how are we gonna deal with clans and locations, and how/if they are gonna share land resources
-        if(isModerator(player)) {
-            return true;
-        //} else if (!location.getWorld().getEnvironment().equals(Environment.NORMAL)) {
+        if (!location.getWorld().getEnvironment().equals(Environment.NORMAL)) {
             // If theyre not in the overworld, they cant build
-         //   return false;
+            return false;
         } else if (landIsClaimed(location)) {
             if(isOwner(location,player)) {
                 return true;
-            } else if(landPermissionCode(location).equals("p")==true) {
+            } else if(landPermissionCode(location).equals("p")) {
                 return true;
             } else if(landPermissionCode(location).equals("pv")==true) {
                 return true;// add land permission pv for public Pvp by @bitcoinjake09
@@ -545,7 +546,7 @@ public class  EmeraldQuest extends JavaPlugin {
                 System.out.println(owner_clan);
                 String player_clan=REDIS.get("clan:"+player.getUniqueId().toString());
                 System.out.println(player_clan);
-                if(owner_clan.equals(player_clan)==true) {
+                if(owner_clan.equals(player_clan)) {
                     return true;
                 } else {
                     return false;
@@ -564,13 +565,18 @@ public class  EmeraldQuest extends JavaPlugin {
 	// v = PvP(private cant build) by @bitcoinjake09
 	// pv= public PvP(can build) by @bitcoinjake09
         // n = no permissions (private)
-        if(REDIS.exists("chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions")) {
-            return REDIS.get("chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions");
+        String key = "chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions";
+             if(land_permission_cache.containsKey(key)) {
+            return land_permission_cache.get(key);
+        } else if(REDIS.exists(key)) {
+            String code=REDIS.get(key);
+            land_permission_cache.put(key,code);
+            return code;
         } else {
             return "n";
         }
-    }
-
+      }
+	
     public boolean createNewArea(Location location, Player owner, String name, int size) {
         // write the new area to REDIS
         JsonObject areaJSON = new JsonObject();
@@ -737,4 +743,3 @@ public boolean addEmeralds(Player player,int amount){
 	return false;
 }
 }
-
