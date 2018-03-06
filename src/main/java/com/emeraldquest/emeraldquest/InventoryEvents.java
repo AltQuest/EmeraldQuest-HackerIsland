@@ -82,7 +82,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.LAPIS_ORE,2),10));
         trades.add(new Trade(new ItemStack(Material.SADDLE,1),20));
         trades.add(new Trade(new ItemStack(Material.SLIME_BALL,2),10));
-        trades.add(new Trade(new ItemStack(Material.GOLDEN_APPLE, 1, (short)1),20));
+        //trades.add(new Trade(new ItemStack(Material.GOLDEN_APPLE, 1, (short)1),20));
         trades.add(new Trade(new ItemStack(Material.APPLE,4),10));
         trades.add(new Trade(new ItemStack(Material.ELYTRA,1),1000));
         trades.add(new Trade(new ItemStack(Material.PURPLE_SHULKER_BOX,1),500));
@@ -216,7 +216,7 @@ public class InventoryEvents implements Listener {
 
 
 				if(clicked.getType()!=trades.get(iStack).itemStack.getType()) {
-                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getType()+" silly!!!");
+                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getAmount()+" "+clicked.getType()+" silly!!!");
 
                                 }                                    
 				else if(phasOpenSlots==true){
@@ -232,7 +232,7 @@ public class InventoryEvents implements Listener {
 while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
 					int satPerItem=0;
 					if (TraStk>=tradeAmount)
-					{satPerItem=((StkPrice*TraStk)/tradeAmount);}
+					{satPerItem=((StkPrice/TraStk)*tradeAmount);}
 					else if (TraStk<tradeAmount)
 					{double dbl = (double)((double)StkPrice/(double)TraStk);satPerItem=(int)(dbl*((double)((int)(tradeAmount))));} 
 
