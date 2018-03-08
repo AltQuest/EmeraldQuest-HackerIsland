@@ -145,9 +145,9 @@ public class  EmeraldQuest extends JavaPlugin {
      
         // Removes all entities on server restart. This is a workaround for when large numbers of entities grash the server. With the release of Minecraft 1.11 and "max entity cramming" this will be unnecesary.
         //     removeAllEntities();
-        killAllVillagers();
-        createScheduledTimers();
+        //killAllVillagers();
 
+        createScheduledTimers();
 
         // creates scheduled timers (update balances, etc)
         createScheduledTimers();
@@ -399,6 +399,7 @@ public class  EmeraldQuest extends JavaPlugin {
         // base health=6
         // level health max=
         int health=8+(player.getLevel()/2);
+	if (isModerator(player)){health=20+(player.getLevel()/2);}
         if(health>40) health=40;
         // player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, player.getLevel(), true));
         player.setMaxHealth(health);
@@ -422,7 +423,7 @@ public class  EmeraldQuest extends JavaPlugin {
                         player.sendMessage(ChatColor.RED + "You cannot name your land that.");
                         return;
                     }
-                    if (REDIS.get("chunk" + x + "," + z + "owner") == null) {
+                    if ((REDIS.get("chunk" + x + "," + z + "owner") == null)|| isModerator(player)) {
             			User user=new User(player);
                                  player.sendMessage(ChatColor.YELLOW + "Claiming land...");
                         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -478,6 +479,7 @@ public class  EmeraldQuest extends JavaPlugin {
                             // Abandon land
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "owner");
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "name");
+			    EmeraldQuest.REDIS.del("chunk"+x+","+z+"permissions");
                         } else if (name.startsWith("transfer ") && name.length() > 9) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
@@ -529,6 +531,7 @@ public class  EmeraldQuest extends JavaPlugin {
 public boolean canBuild(Location location, Player player) {
          // returns true if player has permission to build in location
         // TODO: Find out how are we gonna deal with clans and locations, and how/if they are gonna share land resources
+	if (isModerator(player)){return true;}
         if (!location.getWorld().getEnvironment().equals(Environment.NORMAL)) {
             // If theyre not in the overworld, they cant build
             return false;
