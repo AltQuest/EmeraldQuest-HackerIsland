@@ -71,9 +71,8 @@ public class EntityEvents implements Listener {
 
     private static final List<EntityType> PROTECTED_ENTITIES = Arrays.asList(EntityType.ARMOR_STAND, EntityType.ITEM_FRAME,
             EntityType.PAINTING, EntityType.ENDER_CRYSTAL);
-    
-	private int pvar = 0;    //this is the PvP variable to help display when in PvP zone
-	
+	private int pvar = 0;    
+
     public EntityEvents(EmeraldQuest plugin) {
         emeraldQuest = plugin;
 
@@ -126,7 +125,7 @@ public class EntityEvents implements Listener {
             EmeraldQuest.REDIS.set("displayname:"+player.getUniqueId().toString(),player.getDisplayName());
             EmeraldQuest.REDIS.set("uuid:"+player.getName().toString(),player.getUniqueId().toString());
             if (emeraldQuest.isModerator(player)) {
-                if (emeraldQuest.EMERALDQUEST_ENV.equals("development")==true) {
+                if ((emeraldQuest.EMERALDQUEST_ENV.equals("development")==true)||(player.getUniqueId().toString().equals(EmeraldQuest.ADMIN_UUID.toString()))) {
                     player.setOp(true);
                 }
                 player.sendMessage(ChatColor.YELLOW + "You are a moderator on this server.");
@@ -214,6 +213,10 @@ public class EntityEvents implements Listener {
 	
 	@EventHandler
 	public void onPlayerGameModeChange(PlayerGameModeChangeEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+                final Player player=event.getPlayer();
+		if (player.getUniqueId().toString().equals(EmeraldQuest.ADMIN_UUID.toString()))		
+		event.setCancelled(false);
+		else 
 		event.setCancelled(true);
 	}
 	
@@ -230,7 +233,7 @@ public class EntityEvents implements Listener {
 
 
     @EventHandler
-     public void onPlayerMove(PlayerMoveEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+    public void onPlayerMove(PlayerMoveEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
 
 	if((emeraldQuest.isPvP(event.getPlayer().getLocation())==true)&&(pvar==0)) {event.getPlayer().sendMessage(ChatColor.RED+"IN PVP ZONE");pvar++;}
         if(event.getFrom().getChunk()!=event.getTo().getChunk()) {
@@ -266,6 +269,7 @@ public class EntityEvents implements Listener {
 	}
 
     }
+
     @EventHandler
     public void itemConsume(PlayerItemConsumeEvent event) {
         ItemStack item = event.getItem();
@@ -386,11 +390,11 @@ public class EntityEvents implements Listener {
 		    final double lootmx = EmeraldQuest.rand(1,4);
                     final int money = (int)(EmeraldQuest.LAND_PRICE/lootmx);
                     final int d128 = EmeraldQuest.rand(1, level);
-                    final int whatLoot = EmeraldQuest.rand(1, 2000);
+                    final int whatLoot = EmeraldQuest.rand(1, 100);
                     System.out.println("lastloot: "+EmeraldQuest.REDIS.get("lastloot"));
 			
 
-if (whatLoot<=500){                    
+if (whatLoot<=2){                    
 			
 
 
@@ -815,4 +819,3 @@ if (whatLoot<=500){
 	}
 
 }
-
