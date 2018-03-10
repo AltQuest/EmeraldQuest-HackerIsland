@@ -3,7 +3,10 @@ spigot:
   environment:
     - EMERLADQUEST_ENV=development
     - DENOMINATION_NAME=Ems
-    - LAND_PRICE=10
+    - LAND_PRICE=200
+    - MIN_LOOT=3
+    - MAX_LOOT=100
+    - LOOTIPLIER=50
     - ADMIN_UUID=CHANGEME
     - SET_PvP=true
   build: .
