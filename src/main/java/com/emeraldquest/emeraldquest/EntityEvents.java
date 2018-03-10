@@ -394,7 +394,7 @@ public class EntityEvents implements Listener {
                     final User user = new User(player);
 		    final double xlootx = EmeraldQuest.rand(1,EmeraldQuest.LOOTIPLIER);
 		    final double rndr = EmeraldQuest.rand(EmeraldQuest.MIN_LOOT,EmeraldQuest.MAX_LOOT);
-     	    	    final int money = (int)(rndr/xlootx);
+     	    	    final int money = (int)(rndr/xlootx)+1;
                     final int d128 = EmeraldQuest.rand(1, level);
                     final int whatLoot = EmeraldQuest.rand(1, 100);
                     System.out.println("lastloot: "+EmeraldQuest.REDIS.get("lastloot"));
