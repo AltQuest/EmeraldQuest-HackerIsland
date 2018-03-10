@@ -44,7 +44,7 @@ public class InventoryEvents implements Listener {
         // By default, prices are in bits (not satoshi)
         emeraldQuest = plugin;
         trades=new ArrayList<Trade>();
-        trades.add(new Trade(new ItemStack(Material.ANVIL,1),200));
+        trades.add(new Trade(new ItemStack(Material.ANVIL,1),180));
         trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),100));
         trades.add(new Trade(new ItemStack(Material.QUARTZ,16),100));
         trades.add(new Trade(new ItemStack(Material.BLAZE_ROD,4),100));
@@ -92,7 +92,9 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.BROWN_GLAZED_TERRACOTTA,16),400));
         trades.add(new Trade(new ItemStack(Material.BLUE_GLAZED_TERRACOTTA,16),400));
         trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),400));
+trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),400));
         trades.add(new Trade(new ItemStack(Material.GOLDEN_APPLE,1),50));
+	trades.add(new Trade(new ItemStack(Material.MONSTER_EGG, 1, (short)120),1000));
 
 
     }
