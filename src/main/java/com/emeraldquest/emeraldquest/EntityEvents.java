@@ -98,6 +98,10 @@ public class EntityEvents implements Listener {
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player=event.getPlayer();
+	//this adds a bonus to new players of whatever the land price is @bitcoinjake09
+	if(EmeraldQuest.REDIS.exists("name:"+player.getUniqueId().toString())==null) {
+		emeraldQuest.addEmeralds(player,(EmeraldQuest.LAND_PRICE));
+	}
 
         EmeraldQuest.REDIS.set("name:"+player.getUniqueId().toString(),player.getName());
         EmeraldQuest.REDIS.set("uuid:"+player.getName().toString(),player.getUniqueId().toString());
@@ -105,6 +109,7 @@ public class EntityEvents implements Listener {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER,PROBLEM_MESSAGE);
         }
        
+	
 
     }
 
@@ -387,8 +392,9 @@ public class EntityEvents implements Listener {
                 if (damage.getDamager() instanceof Player && level >= 0) {
                     final Player player = (Player) damage.getDamager();
                     final User user = new User(player);
-		    final double lootmx = EmeraldQuest.rand(1,4);
-                    final int money = (int)(EmeraldQuest.LAND_PRICE/lootmx);
+		    final double xlootx = EmeraldQuest.rand(1,EmeraldQuest.LOOTIPLIER);
+		    final double rndr = EmeraldQuest.rand(EmeraldQuest.MIN_LOOT,EmeraldQuest.MAX_LOOT);
+     	    	    final int money = (int)(rndr/xlootx);
                     final int d128 = EmeraldQuest.rand(1, level);
                     final int whatLoot = EmeraldQuest.rand(1, 100);
                     System.out.println("lastloot: "+EmeraldQuest.REDIS.get("lastloot"));
