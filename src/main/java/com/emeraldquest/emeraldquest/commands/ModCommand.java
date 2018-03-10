@@ -40,7 +40,18 @@ public class ModCommand extends CommandAction {
                 sender.sendMessage(ChatColor.YELLOW+EmeraldQuest.REDIS.get("name:"+uuid));
             }
             return true;
-        } else {
+        } else if(args[0].equals("flag")) {
+         if (EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("false")||EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString())==null){
+		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"true");
+		player.sendMessage(ChatColor.RED + "ModFlag is ON");
+           }
+	 else {
+		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"false");
+		player.sendMessage(ChatColor.RED + "ModFlag is OFF");
+           }
+
+	return true;	
+	} else {
             return false;
         }
     }
