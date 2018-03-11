@@ -121,7 +121,8 @@ $ sudo curl -L https://github.com/docker/compose/releases/download/1.19.0/docker
 
 and give permission to docker compose
 
-$ sudo chmod +x /usr/local/bin/docker-compose
+$ chmod +x /usr/local/bin/docker-compose
+$ chmod +x gradlew
 
 To verify docker compose is installed you can run this:
 
@@ -166,7 +167,26 @@ redis:
 ```
 docker-compose up
 ```
+******************************
+IF YOU ALREADY HAVE DOCKER AND ENVIRONMENT SET UP ALL YOU HAVE TO DO IS
 
+$git clone "URL OF WHATEVER QUEST FORK YOU WANT"
+
+this will work with any of these so far
+https://github.com/bitquest/bitquest
+https://github.com/AltQuest/AltQuest-running-transations-broken
+https://github.com/AltQuest/emeraldquest
+
+$cd WHATEVERYOUGOT
+
+ex: $cd emeraldquest
+
+$ chmod +x gradlew
+   you will want to make or change docker-compose.yml at this point also
+$ ./gradlew setupWorkspace
+$ ./gradlew shadowJar
+$ docker-compose up
+****************************
 # More info
 
 https://emeraldquest.co/
