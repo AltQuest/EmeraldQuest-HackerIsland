@@ -182,9 +182,13 @@ $cd WHATEVERYOUGOT
 ex: $cd emeraldquest
 
 $ chmod +x gradlew
+
    you will want to make or change docker-compose.yml at this point also
+
 $ ./gradlew setupWorkspace
+
 $ ./gradlew shadowJar
+
 $ docker-compose up
 ****************************
 # More info
