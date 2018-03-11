@@ -41,7 +41,8 @@ public class ModCommand extends CommandAction {
             }
             return true;
         } else if(args[0].equals("flag")) {
-         if (EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("false")||EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString())==null){
+	try{
+         if (EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("false")||!EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString())){
 		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"true");
 		player.sendMessage(ChatColor.RED + "ModFlag is ON");
            }
@@ -49,6 +50,10 @@ public class ModCommand extends CommandAction {
 		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"false");
 		player.sendMessage(ChatColor.RED + "ModFlag is OFF");
            }
+		} catch (NullPointerException nullPointer)
+		{
+                	System.out.println("modflag: "+nullPointer);
+		}
 
 	return true;	
 	} else {
