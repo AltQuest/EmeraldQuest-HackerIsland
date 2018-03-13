@@ -42,12 +42,12 @@ public class ModCommand extends CommandAction {
             return true;
         } else if(args[0].equals("flag")) {
 	try{
-         if (EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("false")||!EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString())){
+         if (!(EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString()))){
 		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"true");
 		player.sendMessage(ChatColor.RED + "ModFlag is ON");
            }
 	 else {
-		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"false");
+		EmeraldQuest.REDIS.del("ModFlag "+player.getUniqueId().toString());
 		player.sendMessage(ChatColor.RED + "ModFlag is OFF");
            }
 		} catch (NullPointerException nullPointer)
