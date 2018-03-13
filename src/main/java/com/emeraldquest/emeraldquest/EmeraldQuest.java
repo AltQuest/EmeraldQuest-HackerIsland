@@ -428,7 +428,7 @@ public class  EmeraldQuest extends JavaPlugin {
                         player.sendMessage(ChatColor.RED + "You cannot name your land that.");
                         return;
                     }
-                    if ((REDIS.get("chunk" + x + "," + z + "owner") == null)|| isModerator(player)) {
+                    if (REDIS.get("chunk" + x + "," + z + "owner") == null){
             			User user=new User(player);
                                  player.sendMessage(ChatColor.YELLOW + "Claiming land...");
                         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -485,7 +485,7 @@ public class  EmeraldQuest extends JavaPlugin {
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "owner");
                             EmeraldQuest.REDIS.del("chunk" + x + "," + z + "name");
 			    EmeraldQuest.REDIS.del("chunk"+x+","+z+"permissions");
-                        } else if (name.startsWith("transfer ") && name.length() > 9) {
+                        } else if (name.startsWith("transfer ") && name.length() > 1) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
                             final String newOwner = name.substring(9);
