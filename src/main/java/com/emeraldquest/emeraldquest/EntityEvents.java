@@ -99,7 +99,7 @@ public class EntityEvents implements Listener {
     public void onPlayerLogin(PlayerLoginEvent event) {
         Player player=event.getPlayer();
 	//this adds a bonus to new players of whatever the land price is @bitcoinjake09
-	if(EmeraldQuest.REDIS.exists("name:"+player.getUniqueId().toString())==null) {
+	if(!(EmeraldQuest.REDIS.exists("name:"+player.getUniqueId().toString()))) {
 		emeraldQuest.addEmeralds(player,(EmeraldQuest.LAND_PRICE));
 	}
 
@@ -343,7 +343,7 @@ public class EntityEvents implements Listener {
 
                 if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                     // TODO: open the tps inventory
-                    player.sendMessage(ChatColor.GREEN+"Teleporting to satoshi town...");
+                    player.sendMessage(ChatColor.GREEN+"Teleporting to Emerald City...");
                     player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
                     World world=Bukkit.getWorld("world");
 
@@ -394,13 +394,15 @@ public class EntityEvents implements Listener {
                     final User user = new User(player);
 		    final double xlootx = EmeraldQuest.rand(1,EmeraldQuest.LOOTIPLIER);
 		    final double rndr = EmeraldQuest.rand(EmeraldQuest.MIN_LOOT,EmeraldQuest.MAX_LOOT);
-     	    	    final int money = (int)(rndr/xlootx)+1;
+     	    	    final int money = (int)(rndr/3)+EmeraldQuest.MIN_LOOT;
+
+			
                     final int d128 = EmeraldQuest.rand(1, level);
-                    final int whatLoot = EmeraldQuest.rand(1, 100);
+                    final int whatLoot = EmeraldQuest.rand(1, (EmeraldQuest.LOOTIPLIER));
                     System.out.println("lastloot: "+EmeraldQuest.REDIS.get("lastloot"));
 			
 
-if (whatLoot<=2){                    
+if (whatLoot<=4){                    
 			
 
 
@@ -410,6 +412,10 @@ if (whatLoot<=2){
                             public void run() {
                                 try {
                                     if (emeraldQuest.addEmeralds(player,(money))) {
+				if ((rndr==EmeraldQuest.MAX_LOOT)&&(emeraldQuest.addEmeralds(player,(EmeraldQuest.MAX_LOOT-money)))){
+				System.out.println("[loot]"+whatLoot+" "+player.getDisplayName()+": Emeralds  "+(EmeraldQuest.MAX_LOOT));
+				}
+				else{
                                         System.out.println("[loot]"+whatLoot+" "+player.getDisplayName()+": Emeralds  "+(money));
                                         player.sendMessage(ChatColor.GREEN + "You got " + ChatColor.BOLD + money + ChatColor.GREEN + " Emeralds of loot!");
                                         // player.playSound(player.getLocation(), Sound.LEVEL_UP, 20, 1);
@@ -426,7 +432,7 @@ if (whatLoot<=2){
                                             mixpanel.deliver(delivery);
                                         }
                                     }
-                                    
+                                  }  
                                 } catch (IOException e1) {
                                     e1.printStackTrace();
                                 } 
