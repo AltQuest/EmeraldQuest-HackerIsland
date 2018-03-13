@@ -62,15 +62,15 @@ public class LandCommand extends CommandAction {
                     String landname= EmeraldQuest.REDIS.get("chunk"+x+","+z+"name");
 
                     if(args[1].equalsIgnoreCase("public")) {
-                            emeraldQuest.REDIS.set("chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions","p");
+                            EmeraldQuest.REDIS.set("chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions","p");
                             player.sendMessage(ChatColor.GREEN+"the land "+landname+" is now public");
                             return true;// added pvp and public pvp by @bitcoinjake09
                         } else if(args[1].equalsIgnoreCase("pvp")) {
-                            emeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "v");
+                            EmeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "v");
                             player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now pvp");
                             return true;
                         } else if((args[1].equalsIgnoreCase("pvp"))&&(args[2].equalsIgnoreCase("public"))){
-                            emeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "pv");
+                            EmeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "pv");
                             player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now public pvp");
                             return true;// end pvp by @bitcoinjake09
                         } else if(args[1].equalsIgnoreCase("clan")) {
