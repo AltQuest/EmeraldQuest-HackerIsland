@@ -286,7 +286,7 @@ while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
                 player.closeInventory();
 
                 player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
-                Chunk c = new Location(emeraldQuest.getServer().getWorld("world"), x, 72, z).getChunk();
+                Chunk c = new Location(emeraldQuest.getServer().getWorld("world"), x, 74, z).getChunk();
                 if (!c.isLoaded()) {
                     c.load();
                 }
