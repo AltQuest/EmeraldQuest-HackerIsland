@@ -134,6 +134,7 @@ public class EntityEvents implements Listener {
                     player.setOp(true);
                 }
                 player.sendMessage(ChatColor.YELLOW + "You are a moderator on this server.");
+		player.setPlayerListName(ChatColor.RED + "[MOD] " + ChatColor.WHITE + player.getName());
 		}
 
             String welcome = rawwelcome.toString();
@@ -142,6 +143,9 @@ public class EntityEvents implements Listener {
             if(EmeraldQuest.REDIS.exists("clan:"+player.getUniqueId().toString())) {
                 String clan = EmeraldQuest.REDIS.get("clan:"+player.getUniqueId().toString());
                 player.setPlayerListName(ChatColor.GOLD + "[" + clan + "] " + ChatColor.WHITE + player.getName());
+            if (emeraldQuest.isModerator(player)) {
+		player.setPlayerListName(ChatColor.RED + "[MOD] " + ChatColor.GOLD + "[" + clan + "] " + ChatColor.WHITE + player.getName());		
+		}
             }
 
             // Prints the user balance
@@ -244,16 +248,21 @@ public class EntityEvents implements Listener {
         if(event.getFrom().getChunk()!=event.getTo().getChunk()) {
 		pvar = 0;
             emeraldQuest.updateScoreboard(event.getPlayer());
-            if(!event.getFrom().getWorld().getName().endsWith("_nether") && !event.getFrom().getWorld().getName().endsWith("_end")) {
-		
+            if(!event.getFrom().getWorld().getName().endsWith("_end")) {
+		String chunkname = "";
+		if (event.getPlayer().getWorld().getName().equals("world")){
+		chunkname="chunk";
+		} else if (event.getPlayer().getWorld().getName().equals("world_nether")){
+		chunkname="netherchunk";
+		} //gets which chunks for which world @bitcoinjake09
                 int x1=event.getFrom().getChunk().getX();
                 int z1=event.getFrom().getChunk().getZ();
 
                 int x2=event.getTo().getChunk().getX();
                 int z2=event.getTo().getChunk().getZ();
 
-                String name1=EmeraldQuest.REDIS.get("chunk"+x1+","+z1+"name")!= null ? EmeraldQuest.REDIS.get("chunk"+x1+","+z1+"name") : "the wilderness";
-                String name2=EmeraldQuest.REDIS.get("chunk"+x2+","+z2+"name")!= null ? EmeraldQuest.REDIS.get("chunk"+x2+","+z2+"name") : "the wilderness";
+                String name1=EmeraldQuest.REDIS.get(chunkname+""+x1+","+z1+"name")!= null ? EmeraldQuest.REDIS.get(chunkname+""+x1+","+z1+"name") : "the wilderness";
+                String name2=EmeraldQuest.REDIS.get(chunkname+""+x2+","+z2+"name")!= null ? EmeraldQuest.REDIS.get(chunkname+""+x2+","+z2+"name") : "the wilderness";
 
                 if(name1==null) name1="the wilderness";
                  if(name2==null) name2="the wilderness";
@@ -632,7 +641,7 @@ if (whatLoot<=4){
     			if (!emeraldQuest.isPvP(event.getEntity().getLocation()))
 			event.setCancelled(true);
     		}
-    		// PvP is always off unless landPermissionCode()=="v"
+    		// PvP is always off unless landPermissionCode()=="v" or "vp"
     		if (event.getEntity() instanceof Player && ((EntityDamageByEntityEvent) event).getDamager() instanceof Player) {		
 			if (!emeraldQuest.isPvP(event.getEntity().getLocation()))
 			event.setCancelled(true);	
