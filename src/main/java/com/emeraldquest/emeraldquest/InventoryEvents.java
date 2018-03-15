@@ -240,8 +240,8 @@ public class InventoryEvents implements Listener {
 					
 while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
 					int satPerItem=0;
-					if (TraStk>=tradeAmount)
-					{satPerItem=((StkPrice/TraStk)*tradeAmount);}
+
+					satPerItem=((StkPrice/TraStk)*tradeAmount);
 					 
 					satPerItem=satPerItem/4;
 					emeraldQuest.addEmeralds(player, (satPerItem));
