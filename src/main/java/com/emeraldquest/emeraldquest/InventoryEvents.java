@@ -71,7 +71,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.SADDLE,1),20));
         trades.add(new Trade(new ItemStack(Material.CHORUS_FLOWER,4),20));
         trades.add(new Trade(new ItemStack(Material.SPONGE,4),200));
-        //trades.add(new Trade(new ItemStack(Material.SAND,16),16));
+        trades.add(new Trade(new ItemStack(Material.SAND,16),16));
         trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
         trades.add(new Trade(new ItemStack(Material.WATCH,1),100));
         trades.add(new Trade(new ItemStack(Material.SEA_LANTERN,2),50));
@@ -229,7 +229,7 @@ public class InventoryEvents implements Listener {
 
 					int tradeAmount=clicked.getAmount();
 
-    					if((clicked.getType()!=trades.get(iStack).itemStack.getType())||(TraStk<tradeAmount)) {
+    					if((clicked.getType()!=trades.get(iStack).itemStack.getType())||(tradeAmount<TraStk)) {
                                     player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getAmount()+" "+clicked.getType()+" silly!!!");
 
                                 }  
