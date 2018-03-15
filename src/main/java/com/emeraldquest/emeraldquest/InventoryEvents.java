@@ -45,10 +45,10 @@ public class InventoryEvents implements Listener {
         emeraldQuest = plugin;
         trades=new ArrayList<Trade>();
         //trades.add(new Trade(new ItemStack(Material.ANVIL,1),180));
-        trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),100));
-        trades.add(new Trade(new ItemStack(Material.QUARTZ,16),100));
+        trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),25));
+        trades.add(new Trade(new ItemStack(Material.QUARTZ,16),25));
         trades.add(new Trade(new ItemStack(Material.BLAZE_ROD,4),100));
-        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,16),50));
+        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,16),16));
         trades.add(new Trade(new ItemStack(Material.GHAST_TEAR,4),200));
         trades.add(new Trade(new ItemStack(Material.COMPASS,1),1));
         trades.add(new Trade(new ItemStack(Material.DIAMOND_BLOCK,2),300));
@@ -65,13 +65,13 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.COOKED_BEEF,16),50));
         //trades.add(new Trade(new ItemStack(Material.LAVA_BUCKET,1),50));
         trades.add(new Trade(new ItemStack(Material.TOTEM,1),2500));
-        trades.add(new Trade(new ItemStack(Material.NETHER_BRICK,16),200));
+        //trades.add(new Trade(new ItemStack(Material.NETHER_BRICK,16),200));
         //trades.add(new Trade(new ItemStack(Material.ENDER_STONE,1),100));
         trades.add(new Trade(new ItemStack(Material.NETHER_STAR,1),4500));
         trades.add(new Trade(new ItemStack(Material.SADDLE,1),20));
         trades.add(new Trade(new ItemStack(Material.CHORUS_FLOWER,4),20));
         trades.add(new Trade(new ItemStack(Material.SPONGE,4),200));
-        trades.add(new Trade(new ItemStack(Material.SAND,16),10));
+        //trades.add(new Trade(new ItemStack(Material.SAND,16),16));
         trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
         trades.add(new Trade(new ItemStack(Material.WATCH,1),100));
         trades.add(new Trade(new ItemStack(Material.SEA_LANTERN,2),50));
@@ -220,26 +220,29 @@ public class InventoryEvents implements Listener {
                                 }
 
 
-				if(clicked.getType()!=trades.get(iStack).itemStack.getType()) {
-                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getAmount()+" "+clicked.getType()+" silly!!!");
-
-                                }                                    
-				else if(phasOpenSlots==true){
+				                                  
+				if(phasOpenSlots==true){
 			
-    
-                                        player.sendMessage(ChatColor.GREEN + "" + clicked.getType() + " sold");
-					//receive emeralds based on price of items \/ \/ \/
 					int StkPrice = 	(trades.get(iStack).price);			
 					int TraStk = 	(trades.get(iStack).itemStack.getAmount());
 
 
 					int tradeAmount=clicked.getAmount();
+
+    					if((clicked.getType()!=trades.get(iStack).itemStack.getType())||(TraStk<tradeAmount)) {
+                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getAmount()+" "+clicked.getType()+" silly!!!");
+
+                                }  
+					else{
+                                        player.sendMessage(ChatColor.GREEN + "" + clicked.getType() + " sold");
+					}
+					//receive emeralds based on price of items \/ \/ \/
+					
 while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
 					int satPerItem=0;
 					if (TraStk>=tradeAmount)
 					{satPerItem=((StkPrice/TraStk)*tradeAmount);}
-					else if (TraStk<tradeAmount)
-					{double dbl = (double)((double)StkPrice/(double)TraStk);satPerItem=(int)(dbl*((double)((int)(tradeAmount))));} 
+					 
 					satPerItem=satPerItem/4;
 					emeraldQuest.addEmeralds(player, (satPerItem));
 
