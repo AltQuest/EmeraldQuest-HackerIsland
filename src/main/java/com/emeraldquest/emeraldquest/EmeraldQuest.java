@@ -412,9 +412,17 @@ public class  EmeraldQuest extends JavaPlugin {
 
     public void claimLand(final String name, Chunk chunk, final Player player) throws ParseException, org.json.simple.parser.ParseException, IOException {
         // check that land actually has a name
+	String chunkname = "";
+
+	if (player.getWorld().getName().equals("world")){
+	chunkname="chunk";
+	} else if (player.getWorld().getName().equals("world_nether")){
+	chunkname="netherchunk";
+	System.out.println("nethertest 1"+chunkname);
+	} //gets which chunks for which world @bitcoinjake09
         final int x = chunk.getX();
         final int z = chunk.getZ();
-        System.out.println("[claim] "+player.getDisplayName()+" wants to claim "+x+","+z+" with name "+name);
+        System.out.println("[claim] "+player.getDisplayName()+" wants to claim a"+x+","+z+" with name "+name);
 
         if (!name.isEmpty()) {
             // check that desired area name doesn't have non-alphanumeric characters
@@ -428,7 +436,7 @@ public class  EmeraldQuest extends JavaPlugin {
                         player.sendMessage(ChatColor.RED + "You cannot name your land that.");
                         return;
                     }
-                    if (REDIS.get("chunk" + x + "," + z + "owner") == null){
+                    if (REDIS.get(chunkname+"" + x + "," + z + "owner") == null){
             			User user=new User(player);
                                  player.sendMessage(ChatColor.YELLOW + "Claiming land...");
                         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -439,15 +447,25 @@ public class  EmeraldQuest extends JavaPlugin {
                                 // A villager is born
                                 try {
                                   //if ((player.getUniqueId().toString().equals(EmeraldQuest.ADMIN_UUID.toString()))||((removeEmeralds(player,(EmeraldQuest.LAND_PRICE / 100))) == true)) {
-                                    if (((removeEmeralds(player,(LAND_PRICE))) == true)) {
+					String chunkname = "";
+					int landiplier = 1;
+	if (player.getWorld().getName().equals("world")){
+	chunkname="chunk";
+	} else if (player.getWorld().getName().equals("world_nether")){
+	chunkname="netherchunk";
+	landiplier =4;
+	System.out.println("nethertest 2"+chunkname+" "+landiplier);
+	} //gets which chunks for which world @bitcoinjake09
+	
+                                    if (((removeEmeralds(player,(LAND_PRICE*landiplier))) == true)) {
 
-                                        EmeraldQuest.REDIS.set("chunk" + x + "," + z + "owner", player.getUniqueId().toString());
-                                        EmeraldQuest.REDIS.set("chunk" + x + "," + z + "name", name);
+                                        EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "owner", player.getUniqueId().toString());
+                                        EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "name", name);
 					land_owner_cache=new HashMap();
                                             land_name_cache=new HashMap();
                                             land_unclaimed_cache=new HashMap();
                                         player.sendMessage(ChatColor.GREEN + "Congratulations! You're now the owner of " + name + "!");
-                                        player.sendMessage(ChatColor.YELLOW + "Price was "+(LAND_PRICE)+" Emeralds");
+                                        player.sendMessage(ChatColor.YELLOW + "Price was "+(LAND_PRICE*landiplier)+" Emeralds");
                                         if (emeraldQuest.messageBuilder != null) {
 
                                             // Create an event
@@ -467,8 +485,8 @@ public class  EmeraldQuest extends JavaPlugin {
 					
 					else {
                                         //int balance = new User(player).wallet.balance();
-                                        if (countEmeralds(player) < (LAND_PRICE)) {
-                                            player.sendMessage(ChatColor.RED + "You don't have enough money! You need " + ChatColor.BOLD + Math.ceil(((LAND_PRICE) - countEmeralds(player))) + ChatColor.RED + " more emeralds.");
+                                        if (countEmeralds(player) < (LAND_PRICE*landiplier)) {
+                                            player.sendMessage(ChatColor.RED + "You don't have enough money! You need " + ChatColor.BOLD + Math.ceil(((LAND_PRICE*landiplier) - countEmeralds(player))) + ChatColor.RED + " more emeralds.");
                                         } else {
                                             player.sendMessage(ChatColor.RED + "Claim payment failed. Please try again later.");
                                         }
@@ -479,12 +497,12 @@ public class  EmeraldQuest extends JavaPlugin {
                             }
                         });		
 
-                    } else if (REDIS.get("chunk" + x + "," + z + "owner").equals(player.getUniqueId().toString()) || isModerator(player)) {
+                    } else if (REDIS.get(chunkname+""+ x + "," + z + "owner").equals(player.getUniqueId().toString()) || isModerator(player)) {
                         if (name.equals("abandon")) {
                             // Abandon land
-                            EmeraldQuest.REDIS.del("chunk" + x + "," + z + "owner");
-                            EmeraldQuest.REDIS.del("chunk" + x + "," + z + "name");
-			    EmeraldQuest.REDIS.del("chunk"+x+","+z+"permissions");
+                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "owner");
+                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "name");
+			    EmeraldQuest.REDIS.del(chunkname+""+x+","+z+"permissions");
                         } else if (name.startsWith("transfer ") && name.length() > 1) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
@@ -493,18 +511,18 @@ public class  EmeraldQuest extends JavaPlugin {
 
                             if (REDIS.exists("uuid:" + newOwner)) {
                                 String newOwnerUUID = REDIS.get("uuid:" + newOwner);
-                                EmeraldQuest.REDIS.set("chunk" + x + "," + z + "owner", newOwnerUUID);
+                                EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "owner", newOwnerUUID);
                                 player.sendMessage(ChatColor.GREEN + "This land now belongs to " + newOwner);
                             } else {
                                 player.sendMessage(ChatColor.RED + "Could not find " + newOwner + ". Did you misspell their name?");
                             }
 
-                        } else if (EmeraldQuest.REDIS.get("chunk" + x + "," + z + "name").equals(name)) {
+                        } else if (EmeraldQuest.REDIS.get(chunkname+"" + x + "," + z + "name").equals(name)) {
                             player.sendMessage(ChatColor.RED + "You already own this land!");
                         } else {
                             // Rename land
                             player.sendMessage(ChatColor.GREEN + "You renamed this land to " + name + ".");
-                            EmeraldQuest.REDIS.set("chunk" + x + "," + z + "name", name);
+                            EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "name", name);
                         }
                     }
                 } else {
@@ -518,7 +536,9 @@ public class  EmeraldQuest extends JavaPlugin {
         }
     }
     public boolean isOwner(Location location, Player player) {
-        String key="chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+	String key="";	
+	if (player.getWorld().getName().equals("world")){
+        key="chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
         if(land_owner_cache.containsKey(key)) {
             if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
                 return true;
@@ -528,10 +548,25 @@ public class  EmeraldQuest extends JavaPlugin {
         } else if (REDIS.get(key).equals(player.getUniqueId().toString())) {
             // player is the owner of the chunk
             return true;
-        } else {
+        } 
+	
+	} else if (player.getWorld().getName().equals("world_nether")){
+        key="netherchunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+        if(land_owner_cache.containsKey(key)) {
+            if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
+                return true;
+            } else {
+                return false;
+            }
+        } else if (REDIS.get(key).equals(player.getUniqueId().toString())) {
+            // player is the owner of the chunk
+            return true;
+        } 
+	
+	} else {
             return false;
         }
-
+	return false;
     }
 public boolean canBuild(Location location, Player player) {
          // returns true if player has permission to build in location
@@ -544,7 +579,8 @@ public boolean canBuild(Location location, Player player) {
 		{
                 	//System.out.println("modflag: "+nullPointer);
 		}		
-        if (!location.getWorld().getEnvironment().equals(Environment.NORMAL)) {
+
+        if (location.getWorld().getEnvironment().equals(Environment.THE_END)) {
             // If theyre not in the overworld, they cant build
             return false;
         } else if (landIsClaimed(location)) {
@@ -555,6 +591,7 @@ public boolean canBuild(Location location, Player player) {
             } else if(landPermissionCode(location).equals("pv")) {
                 return true;// add land permission pv for public Pvp by @bitcoinjake09
             } else if(landPermissionCode(location).equals("c")==true) {
+		if (player.getWorld().getName().equals("world")){
                 String owner_uuid=REDIS.get("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner");
                 System.out.println(owner_uuid);
                 String owner_clan=REDIS.get("clan:"+owner_uuid);
@@ -566,12 +603,27 @@ public boolean canBuild(Location location, Player player) {
                 } else {
                     return false;
                 }
+		}//end world lol @bitcoinjake09
+		else if (player.getWorld().getName().equals("world_nether")){
+                String owner_uuid=REDIS.get("netherchunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner");
+                System.out.println(owner_uuid);
+                String owner_clan=REDIS.get("clan:"+owner_uuid);
+                System.out.println(owner_clan);
+                String player_clan=REDIS.get("clan:"+player.getUniqueId().toString());
+                System.out.println(player_clan);
+                if(owner_clan.equals(player_clan)) {
+                    return true;
+                } else {
+                    return false;
+                }
+		}//world_nether @bitcoinjake09
             } else {
                 return false;
             }
         } else {
             return true;
         }
+	            return true;
     }
     public String landPermissionCode(Location location) {
         // permission codes:
@@ -580,18 +632,32 @@ public boolean canBuild(Location location, Player player) {
 	// v = PvP(private cant build) by @bitcoinjake09
 	// pv= public PvP(can build) by @bitcoinjake09
         // n = no permissions (private)
-        String key = "chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions";
-             if(land_permission_cache.containsKey(key)) {
+	// added netherchunks @bitcoinjake09
+	String key = "";
+	if (location.getWorld().getName().equals("world")){
+        key = "chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions";
+            if(land_permission_cache.containsKey(key)) {
             return land_permission_cache.get(key);
         } else if(REDIS.exists(key)) {
             String code=REDIS.get(key);
             land_permission_cache.put(key,code);
             return code;
-        } else {
+        } 
+	} else if (location.getWorld().getName().equals("world_nether")){
+        key = "netherchunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions";
+           if(land_permission_cache.containsKey(key)) {
+            return land_permission_cache.get(key);
+        } else if(REDIS.exists(key)) {
+            String code=REDIS.get(key);
+            land_permission_cache.put(key,code);
+            return code;
+        } 
+	}else {
             return "n";
         }
-      }
-	
+                  return "n";
+    }
+
     public boolean createNewArea(Location location, Player owner, String name, int size) {
         // write the new area to REDIS
         JsonObject areaJSON = new JsonObject();
@@ -620,7 +686,9 @@ public boolean canBuild(Location location, Player player) {
 
     
     public boolean landIsClaimed(Location location) {
-        String key="chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"owner";
+	String key="";
+	if (location.getWorld().getName().equals("world")){
+        key="chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"owner";
         if(land_unclaimed_cache.containsKey(key)) {
             return false;
         } else if (land_owner_cache.containsKey(key)) {
@@ -634,6 +702,27 @@ public boolean canBuild(Location location, Player player) {
                 return false;
             }
         }
+	}//end world lmao @bitcoinjake09
+	else if (location.getWorld().getName().equals("world_nether")){
+	key="chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"owner";
+        if(land_unclaimed_cache.containsKey(key)) {
+            return false;
+        } else if (land_owner_cache.containsKey(key)) {
+            return true;
+        } else {
+            if(REDIS.exists(key)==true) {
+                land_owner_cache.put(key,REDIS.get(key));
+                return true;
+            } else {
+                land_unclaimed_cache.put(key,true);
+                return false;
+            }
+        }
+	}//end nether
+	else {
+                land_unclaimed_cache.put(key,true);
+                return false;
+            }
     }
 
 
