@@ -29,9 +29,8 @@ public class LandCommand extends CommandAction {
 //                sb.append(" " + args[i]);
 //            }
                 String claimName = sb.toString().trim();
-
                 Location location=player.getLocation();
-                if (!location.getWorld().getEnvironment().equals(World.Environment.NORMAL)) {
+                if (!location.getWorld().getName().endsWith("_end")) {
                     player.sendMessage(ChatColor.RED+"You cannot claim land here.");
                     return true;
                 }
@@ -58,27 +57,34 @@ public class LandCommand extends CommandAction {
                     Location location=player.getLocation();
                     int x=location.getChunk().getX();
                     int z=location.getChunk().getZ();
+		
+		String chunkname = "";
+	if (player.getWorld().equals("world")){
+	chunkname="chunk";
+	} else if (player.getWorld().equals("world_nether")){
+	chunkname="netherchunk";}
+
                     if(emeraldQuest.landIsClaimed(location) && emeraldQuest.isOwner(location,player)) {
-                    String landname= EmeraldQuest.REDIS.get("chunk"+x+","+z+"name");
+                    String landname= EmeraldQuest.REDIS.get(chunkname+""+x+","+z+"name");
 
                     if(args[1].equalsIgnoreCase("public")) {
-                            EmeraldQuest.REDIS.set("chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions","p");
+                            EmeraldQuest.REDIS.set(chunkname+""+location.getChunk().getX()+","+location.getChunk().getZ()+"permissions","p");
                             player.sendMessage(ChatColor.GREEN+"the land "+landname+" is now public");
                             return true;// added pvp and public pvp by @bitcoinjake09
                         } else if(args[1].equalsIgnoreCase("pvp")) {
-                            EmeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "v");
+                            EmeraldQuest.REDIS.set(chunkname+"" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "v");
                             player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now pvp");
                             return true;
                         } else if((args[1].equalsIgnoreCase("pvp"))&&(args[2].equalsIgnoreCase("public"))){
-                            EmeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "pv");
+                            EmeraldQuest.REDIS.set(chunkname+"" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "pv");
                             player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now public pvp");
                             return true;// end pvp by @bitcoinjake09
                         } else if(args[1].equalsIgnoreCase("clan")) {
-                        EmeraldQuest.REDIS.set("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "c");
+                        EmeraldQuest.REDIS.set(chunkname+"" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions", "c");
                         player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now clan-owned");
                         return true;
                     } else if(args[1].equalsIgnoreCase("private")) {
-                        EmeraldQuest.REDIS.del("chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions");
+                        EmeraldQuest.REDIS.del(chunkname+"" + location.getChunk().getX() + "," + location.getChunk().getZ() + "permissions");
                         player.sendMessage(ChatColor.GREEN + "the land " + landname + " is now private");
                         return true;
                     } else {
