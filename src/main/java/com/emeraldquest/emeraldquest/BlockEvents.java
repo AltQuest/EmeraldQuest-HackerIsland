@@ -95,8 +95,15 @@ public class BlockEvents implements Listener {
             Chunk blockChunk = nextBlock.getChunk();
 
             String owner1, owner2;
-            if ((owner2 = EmeraldQuest.REDIS.get("chunk" + blockChunk.getX() + "," + blockChunk.getZ() + "owner")) != null) {
-                if ((owner1 = EmeraldQuest.REDIS.get("chunk" + pistonChunk.getX() + "," + pistonChunk.getZ() + "owner")) != null) {
+
+	String chunkname = "";
+	if (event.getBlock().getWorld().getName().equals("world")){
+	chunkname="chunk";
+	} else if (event.getBlock().getWorld().getName().equals("world_nether")){
+	chunkname="netherchunk";}
+
+            if ((owner2 = EmeraldQuest.REDIS.get(chunkname+"" + blockChunk.getX() + "," + blockChunk.getZ() + "owner")) != null) {
+                if ((owner1 = EmeraldQuest.REDIS.get(chunkname+"" + pistonChunk.getX() + "," + pistonChunk.getZ() + "owner")) != null) {
                     if (!owner1.equals(owner2)){
                         event.setCancelled(true);
                     }
@@ -118,8 +125,15 @@ public class BlockEvents implements Listener {
             Chunk blockChunk = nextBlock.getChunk();
 
             String owner1, owner2;
-            if ((owner2 = EmeraldQuest.REDIS.get("chunk" + blockChunk.getX() + "," + blockChunk.getZ() + "owner")) != null) {
-                if ((owner1 = EmeraldQuest.REDIS.get("chunk" + pistonChunk.getX() + "," + pistonChunk.getZ() + "owner")) != null) {
+
+	String chunkname = "";
+	if (event.getBlock().getWorld().getName().equals("world")){
+	chunkname="chunk";
+	} else if (event.getBlock().getWorld().getName().equals("world_nether")){
+	chunkname="netherchunk";}
+
+            if ((owner2 = EmeraldQuest.REDIS.get(chunkname+"" + blockChunk.getX() + "," + blockChunk.getZ() + "owner")) != null) {
+                if ((owner1 = EmeraldQuest.REDIS.get(chunkname+"" + pistonChunk.getX() + "," + pistonChunk.getZ() + "owner")) != null) {
                     if (!owner1.equals(owner2)){
                         event.setCancelled(true);
                         piston.getRelative(event.getDirection()).setType(Material.AIR);
