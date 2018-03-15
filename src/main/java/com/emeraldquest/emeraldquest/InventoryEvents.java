@@ -184,7 +184,7 @@ public class InventoryEvents implements Listener {
 		}} else {
                 // player sells (experimental) for emerald blocks = to items sold @bitcoinjake09
                final ItemStack clicked = event.getCurrentItem();
-                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF) {
+                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL) {
                     BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                     System.out.println("[sell] " + player.getName() + " <- " + clicked.getType());
                     player.sendMessage(ChatColor.YELLOW + "Selling " + clicked.getType() + "...");
