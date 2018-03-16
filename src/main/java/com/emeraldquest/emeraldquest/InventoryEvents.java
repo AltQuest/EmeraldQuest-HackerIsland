@@ -45,57 +45,56 @@ public class InventoryEvents implements Listener {
         emeraldQuest = plugin;
         trades=new ArrayList<Trade>();
         //trades.add(new Trade(new ItemStack(Material.ANVIL,1),180));
-        trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),25));
-        trades.add(new Trade(new ItemStack(Material.QUARTZ,16),25));
-        trades.add(new Trade(new ItemStack(Material.BLAZE_ROD,4),100));
-        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,16),16));
-        trades.add(new Trade(new ItemStack(Material.GHAST_TEAR,4),200));
         trades.add(new Trade(new ItemStack(Material.COMPASS,1),1));
+        trades.add(new Trade(new ItemStack(Material.EYE_OF_ENDER,1),1));
+        trades.add(new Trade(new ItemStack(Material.COOKED_BEEF,16),16));
+        trades.add(new Trade(new ItemStack(Material.ENDER_PEARL,16),32));
+        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,16),16));
+        trades.add(new Trade(new ItemStack(Material.SAND,64),20));
+        trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
+        trades.add(new Trade(new ItemStack(Material.WATCH,1),50));
+	trades.add(new Trade(new ItemStack(Material.PURPLE_SHULKER_BOX,1),500));
+        trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),32));
+        trades.add(new Trade(new ItemStack(Material.QUARTZ,16),32));
+        trades.add(new Trade(new ItemStack(Material.BLAZE_ROD,4),100));
+        trades.add(new Trade(new ItemStack(Material.GHAST_TEAR,4),200));
         trades.add(new Trade(new ItemStack(Material.DIAMOND_BLOCK,2),300));
         trades.add(new Trade(new ItemStack(Material.ELYTRA,1),1000));
         trades.add(new Trade(new ItemStack(Material.IRON_BLOCK,4),200));
         trades.add(new Trade(new ItemStack(Material.EMPTY_MAP,1),10));
         trades.add(new Trade(new ItemStack(Material.ENCHANTMENT_TABLE,1),250));
         trades.add(new Trade(new ItemStack(Material.ENDER_CHEST,1),500));
-        trades.add(new Trade(new ItemStack(Material.ENDER_PEARL,16),100));
-        trades.add(new Trade(new ItemStack(Material.EYE_OF_ENDER,1),100));
         trades.add(new Trade(new ItemStack(Material.FIREWORK,64),100));
         trades.add(new Trade(new ItemStack(Material.GOLD_BLOCK,4),200));
         trades.add(new Trade(new ItemStack(Material.LAPIS_BLOCK,4),200));
-        trades.add(new Trade(new ItemStack(Material.COOKED_BEEF,16),50));
         //trades.add(new Trade(new ItemStack(Material.LAVA_BUCKET,1),50));
         trades.add(new Trade(new ItemStack(Material.TOTEM,1),2500));
         //trades.add(new Trade(new ItemStack(Material.NETHER_BRICK,16),200));
         //trades.add(new Trade(new ItemStack(Material.ENDER_STONE,1),100));
         trades.add(new Trade(new ItemStack(Material.NETHER_STAR,1),4500));
         trades.add(new Trade(new ItemStack(Material.SADDLE,1),20));
-        trades.add(new Trade(new ItemStack(Material.CHORUS_FLOWER,4),20));
-        trades.add(new Trade(new ItemStack(Material.SPONGE,4),200));
-        trades.add(new Trade(new ItemStack(Material.SAND,16),16));
-        trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
-        trades.add(new Trade(new ItemStack(Material.WATCH,1),100));
+        trades.add(new Trade(new ItemStack(Material.CHORUS_FLOWER,8),16));
+        trades.add(new Trade(new ItemStack(Material.SPONGE,4),100));
         trades.add(new Trade(new ItemStack(Material.SEA_LANTERN,2),50));
         trades.add(new Trade(new ItemStack(Material.SLIME_BALL,2),50));
-	trades.add(new Trade(new ItemStack(Material.PURPLE_SHULKER_BOX,1),500));
-        trades.add(new Trade(new ItemStack(Material.SILVER_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.RED_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA, 16),400));
-        trades.add(new Trade(new ItemStack(Material.PINK_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.ORANGE_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.LIME_GLAZED_TERRACOTTA,16),400));
+        trades.add(new Trade(new ItemStack(Material.SILVER_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.RED_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA, 16),100));
+        trades.add(new Trade(new ItemStack(Material.PINK_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.ORANGE_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.MAGENTA_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.LIME_GLAZED_TERRACOTTA,16),100));
         trades.add(new Trade(new ItemStack(Material.GOLDEN_APPLE, 1, (short)1),20));
-        trades.add(new Trade(new ItemStack(Material.LIGHT_BLUE_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.GREEN_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.GRAY_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.CYAN_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.BROWN_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.BLUE_GLAZED_TERRACOTTA,16),400));
-        trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),400));
-	trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),400));
-	trades.add(new Trade(new ItemStack(Material.WHITE_GLAZED_TERRACOTTA,16),400));
-
-        trades.add(new Trade(new ItemStack(Material.EXP_BOTTLE,16),200));
+        trades.add(new Trade(new ItemStack(Material.LIGHT_BLUE_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.GREEN_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.GRAY_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.CYAN_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.BROWN_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.BLUE_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),100));
+	trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),100));
+	trades.add(new Trade(new ItemStack(Material.WHITE_GLAZED_TERRACOTTA,16),100));
+        trades.add(new Trade(new ItemStack(Material.EXP_BOTTLE,16),500));
 	trades.add(new Trade(new ItemStack(Material.MONSTER_EGG, 1, (short)120),1000));
 
 
@@ -184,15 +183,14 @@ public class InventoryEvents implements Listener {
 		}} else {
                 // player sells (experimental) for emerald blocks = to items sold @bitcoinjake09
                final ItemStack clicked = event.getCurrentItem();
-                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL) {
+                if(clicked!=null && clicked.getType()!=Material.AIR) {
                     BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
-                    System.out.println("[sell] " + player.getName() + " <- " + clicked.getType());
-                    player.sendMessage(ChatColor.YELLOW + "Selling " + clicked.getType() + "...");
+                    System.out.println("[sell] " + player.getName() + " <- " +clicked.getAmount()+" "+ clicked.getType());
+                    player.sendMessage(ChatColor.YELLOW + "Selling " +clicked.getAmount()+" "+ clicked.getType() + "...");
                     player.closeInventory();
 		
-			   
-                                		
 		
+                                		
                     scheduler.runTaskAsynchronously(emeraldQuest, new Runnable() {
                         @Override
                         public void run() {
@@ -223,31 +221,34 @@ public class InventoryEvents implements Listener {
 				                                  
 				if(phasOpenSlots==true){
 			
-					int StkPrice = 	(trades.get(iStack).price);			
-					int TraStk = 	(trades.get(iStack).itemStack.getAmount());
+					
+    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.NETHER_STALK && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
+                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getType()+" silly!!!");
 
-
-					int tradeAmount=clicked.getAmount();
-
-    					if((clicked.getType()!=trades.get(iStack).itemStack.getType())||(tradeAmount<TraStk)) {
-                                    player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getAmount()+" "+clicked.getType()+" silly!!!");
-
-                                }  
-					else{
-                                        player.sendMessage(ChatColor.GREEN + "" + clicked.getType() + " sold");
-					}
+                                } else{
+			
+    
+                              
 					//receive emeralds based on price of items \/ \/ \/
 					
-while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
-					int satPerItem=0;
+					double StkPrice = 	(double)(trades.get(iStack).price);			
+					double TraStk = 	(double)(trades.get(iStack).itemStack.getAmount());
+					double tradesatPerItem=(StkPrice/TraStk);
 
-					satPerItem=((StkPrice/TraStk)*tradeAmount);
-					 
-					satPerItem=satPerItem/4;
+					int tradeAmount=clicked.getAmount();
+					int satPerItem=(int)((tradesatPerItem*tradeAmount)/4);
+
+				if (satPerItem>=2){	
+while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
+					
 					emeraldQuest.addEmeralds(player, (satPerItem));
 
                                         player.sendMessage(ChatColor.GREEN + "Traded "+tradeAmount+" "+ (trades.get(iStack).itemStack.getType())+" for " + satPerItem + " emeralds!");					
-					
+				}//end satperitem?
+				else {
+                                    player.sendMessage(ChatColor.RED + "I don't buy "+tradeAmount+" "+clicked.getType()+" silly!!!");
+
+                                }
 					}
                                         if (emeraldQuest.messageBuilder != null) {
 
@@ -261,7 +262,9 @@ while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
                                             MixpanelAPI mixpanel = new MixpanelAPI();
                                             mixpanel.deliver(delivery);
                                         }
-                            } catch (IllegalArgumentException e) {
+
+                            } 
+			} catch (IllegalArgumentException e) {
                                 e.printStackTrace();
                                 player.sendMessage(ChatColor.RED + "Transaction failed. Please try again in a few moments (ERROR 2)");
                             } catch (IOException e) {
