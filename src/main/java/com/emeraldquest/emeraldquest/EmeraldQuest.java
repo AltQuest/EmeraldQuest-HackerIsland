@@ -412,17 +412,16 @@ public class  EmeraldQuest extends JavaPlugin {
 
     public void claimLand(final String name, Chunk chunk, final Player player) throws ParseException, org.json.simple.parser.ParseException, IOException {
         // check that land actually has a name
-	String chunkname = "";
+	String chunkname = " ";
 
 	if (player.getWorld().getName().equals("world")){
 	chunkname="chunk";
 	} else if (player.getWorld().getName().equals("world_nether")){
 	chunkname="netherchunk";
-	System.out.println("nethertest 1"+chunkname);
 	} //gets which chunks for which world @bitcoinjake09
         final int x = chunk.getX();
         final int z = chunk.getZ();
-        System.out.println("[claim] "+player.getDisplayName()+" wants to claim a"+x+","+z+" with name "+name);
+        System.out.println("[claim] "+player.getDisplayName()+" wants to claim a "+x+","+z+" with name "+name);
 
         if (!name.isEmpty()) {
             // check that desired area name doesn't have non-alphanumeric characters
@@ -436,7 +435,7 @@ public class  EmeraldQuest extends JavaPlugin {
                         player.sendMessage(ChatColor.RED + "You cannot name your land that.");
                         return;
                     }
-                    if (REDIS.get(chunkname+"" + x + "," + z + "owner") == null){
+                    if (REDIS.get(chunkname+" " + x + "," + z + "owner") == null){
             			User user=new User(player);
                                  player.sendMessage(ChatColor.YELLOW + "Claiming land...");
                         BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
@@ -447,7 +446,7 @@ public class  EmeraldQuest extends JavaPlugin {
                                 // A villager is born
                                 try {
                                   //if ((player.getUniqueId().toString().equals(EmeraldQuest.ADMIN_UUID.toString()))||((removeEmeralds(player,(EmeraldQuest.LAND_PRICE / 100))) == true)) {
-					String chunkname = "";
+					String chunkname = " ";
 					int landiplier = 1;
 	if (player.getWorld().getName().equals("world")){
 	chunkname="chunk";
@@ -459,8 +458,8 @@ public class  EmeraldQuest extends JavaPlugin {
 	
                                     if (((removeEmeralds(player,(LAND_PRICE*landiplier))) == true)) {
 
-                                        EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "owner", player.getUniqueId().toString());
-                                        EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "name", name);
+                                        EmeraldQuest.REDIS.set(chunkname+" " + x + "," + z + "owner", player.getUniqueId().toString());
+                                        EmeraldQuest.REDIS.set(chunkname+" " + x + "," + z + "name", name);
 					land_owner_cache=new HashMap();
                                             land_name_cache=new HashMap();
                                             land_unclaimed_cache=new HashMap();
@@ -497,12 +496,12 @@ public class  EmeraldQuest extends JavaPlugin {
                             }
                         });		
 
-                    } else if (REDIS.get(chunkname+""+ x + "," + z + "owner").equals(player.getUniqueId().toString()) || isModerator(player)) {
+                    } else if (REDIS.get(chunkname+" "+ x + "," + z + "owner").equals(player.getUniqueId().toString()) || isModerator(player)) {
                         if (name.equals("abandon")) {
                             // Abandon land
-                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "owner");
-                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "name");
-			    EmeraldQuest.REDIS.del(chunkname+""+x+","+z+"permissions");
+                            EmeraldQuest.REDIS.del(chunkname+" "+ x + "," + z + "owner");
+                            EmeraldQuest.REDIS.del(chunkname+" "+ x + "," + z + "name");
+			    EmeraldQuest.REDIS.del(chunkname+" "+x+","+z+"permissions");
                         } else if (name.startsWith("transfer ") && name.length() > 1) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
@@ -511,18 +510,18 @@ public class  EmeraldQuest extends JavaPlugin {
 
                             if (REDIS.exists("uuid:" + newOwner)) {
                                 String newOwnerUUID = REDIS.get("uuid:" + newOwner);
-                                EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "owner", newOwnerUUID);
+                                EmeraldQuest.REDIS.set(chunkname+" " + x + "," + z + "owner", newOwnerUUID);
                                 player.sendMessage(ChatColor.GREEN + "This land now belongs to " + newOwner);
                             } else {
                                 player.sendMessage(ChatColor.RED + "Could not find " + newOwner + ". Did you misspell their name?");
                             }
 
-                        } else if (EmeraldQuest.REDIS.get(chunkname+"" + x + "," + z + "name").equals(name)) {
+                        } else if (EmeraldQuest.REDIS.get(chunkname+" " + x + "," + z + "name").equals(name)) {
                             player.sendMessage(ChatColor.RED + "You already own this land!");
                         } else {
                             // Rename land
                             player.sendMessage(ChatColor.GREEN + "You renamed this land to " + name + ".");
-                            EmeraldQuest.REDIS.set(chunkname+"" + x + "," + z + "name", name);
+                            EmeraldQuest.REDIS.set(chunkname+" " + x + "," + z + "name", name);
                         }
                     }
                 } else {
@@ -538,7 +537,7 @@ public class  EmeraldQuest extends JavaPlugin {
     public boolean isOwner(Location location, Player player) {
 	String key="";	
 	if (player.getWorld().getName().equals("world")){
-        key="chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+        key="chunk " + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
         if(land_owner_cache.containsKey(key)) {
             if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
                 return true;
@@ -551,7 +550,7 @@ public class  EmeraldQuest extends JavaPlugin {
         } 
 	
 	} else if (player.getWorld().getName().equals("world_nether")){
-        key="netherchunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+        key="netherchunk " + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
         if(land_owner_cache.containsKey(key)) {
             if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
                 return true;
