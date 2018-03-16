@@ -49,7 +49,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.EYE_OF_ENDER,1),1));
         trades.add(new Trade(new ItemStack(Material.COOKED_BEEF,16),16));
         trades.add(new Trade(new ItemStack(Material.ENDER_PEARL,16),32));
-        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,16),16));
+        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,64),16));
         trades.add(new Trade(new ItemStack(Material.SAND,64),20));
         trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
         trades.add(new Trade(new ItemStack(Material.WATCH,1),50));
@@ -94,7 +94,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.WHITE_GLAZED_TERRACOTTA,16),100));
-        trades.add(new Trade(new ItemStack(Material.EXP_BOTTLE,16),500));
+        trades.add(new Trade(new ItemStack(Material.EXP_BOTTLE,16),200));
 	trades.add(new Trade(new ItemStack(Material.MONSTER_EGG, 1, (short)120),1000));
 
 
@@ -183,7 +183,7 @@ public class InventoryEvents implements Listener {
 		}} else {
                 // player sells (experimental) for emerald blocks = to items sold @bitcoinjake09
                final ItemStack clicked = event.getCurrentItem();
-                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.NETHER_STALK && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
+                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
                     BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                     System.out.println("[sell] " + player.getName() + " <- " +clicked.getAmount()+" "+ clicked.getType());
                     player.sendMessage(ChatColor.YELLOW + "Selling " +clicked.getAmount()+" "+ clicked.getType() + "...");
@@ -222,7 +222,7 @@ public class InventoryEvents implements Listener {
 				if(phasOpenSlots==true){
 			
 					
-    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.NETHER_STALK && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
+    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
                                     player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getType()+" silly!!!");
 
                                 } else{
