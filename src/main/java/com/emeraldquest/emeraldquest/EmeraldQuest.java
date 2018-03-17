@@ -499,9 +499,9 @@ public class  EmeraldQuest extends JavaPlugin {
                     } else if (REDIS.get(chunkname+" "+ x + "," + z + "owner").equals(player.getUniqueId().toString()) || isModerator(player)) {
                         if (name.equals("abandon")) {
                             // Abandon land
-                            EmeraldQuest.REDIS.del(chunkname+" "+ x + "," + z + "owner");
-                            EmeraldQuest.REDIS.del(chunkname+" "+ x + "," + z + "name");
-			    EmeraldQuest.REDIS.del(chunkname+" "+x+","+z+"permissions");
+                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "owner");
+                            EmeraldQuest.REDIS.del(chunkname+""+ x + "," + z + "name");
+			    EmeraldQuest.REDIS.del(chunkname+""+x+","+z+"permissions");
                         } else if (name.startsWith("transfer ") && name.length() > 1) {
                             // If the name starts with "transfer " and has at least one more character,
                             // transfer land
@@ -537,7 +537,7 @@ public class  EmeraldQuest extends JavaPlugin {
     public boolean isOwner(Location location, Player player) {
 	String key="";	
 	if (player.getWorld().getName().equals("world")){
-        key="chunk " + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+        key="chunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
         if(land_owner_cache.containsKey(key)) {
             if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
                 return true;
@@ -550,7 +550,7 @@ public class  EmeraldQuest extends JavaPlugin {
         } 
 	
 	} else if (player.getWorld().getName().equals("world_nether")){
-        key="netherchunk " + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
+        key="netherchunk" + location.getChunk().getX() + "," + location.getChunk().getZ() + "owner";
         if(land_owner_cache.containsKey(key)) {
             if(land_owner_cache.get(key).equals(player.getUniqueId().toString())) {
                 return true;
