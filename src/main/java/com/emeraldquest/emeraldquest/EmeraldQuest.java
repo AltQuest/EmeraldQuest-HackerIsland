@@ -702,7 +702,7 @@ public boolean canBuild(Location location, Player player) {
         }
 	}//end world lmao @bitcoinjake09
 	else if (location.getWorld().getName().equals("world_nether")){
-	key="chunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"owner";
+	key="netherchunk"+location.getChunk().getX()+","+location.getChunk().getZ()+"owner";
         if(land_unclaimed_cache.containsKey(key)) {
             return false;
         } else if (land_owner_cache.containsKey(key)) {
