@@ -21,6 +21,11 @@ public class LandCommand extends CommandAction {
     }
 
     public boolean run(CommandSender sender, Command cmd, String label, String[] args, Player player) {
+
+	String chunkname="chunk";
+	if (player.getWorld().getName().equals("world_nether")){
+	chunkname="netherchunk";}	
+	
         if(emeraldQuest.rate_limit==false) {
             emeraldQuest.rate_limit=true;
             if(args[0].equalsIgnoreCase("claim")) {
@@ -58,11 +63,7 @@ public class LandCommand extends CommandAction {
                     int x=location.getChunk().getX();
                     int z=location.getChunk().getZ();
 		
-		String chunkname = "";
-	if (player.getWorld().equals("world")){
-	chunkname="chunk";
-	} else if (player.getWorld().equals("world_nether")){
-	chunkname="netherchunk";}
+		
 
                     if(emeraldQuest.landIsClaimed(location) && emeraldQuest.isOwner(location,player)) {
                     String landname= EmeraldQuest.REDIS.get(chunkname+""+x+","+z+"name");
