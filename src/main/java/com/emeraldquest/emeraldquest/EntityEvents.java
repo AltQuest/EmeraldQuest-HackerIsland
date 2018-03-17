@@ -67,7 +67,7 @@ public class EntityEvents implements Listener {
             Material.GRAY_SHULKER_BOX, Material.GREEN_SHULKER_BOX, Material.LIGHT_BLUE_SHULKER_BOX,
             Material.LIME_SHULKER_BOX, Material.MAGENTA_SHULKER_BOX, Material.ORANGE_SHULKER_BOX,
             Material.PINK_SHULKER_BOX, Material.PURPLE_SHULKER_BOX, Material.RED_SHULKER_BOX, Material.SILVER_SHULKER_BOX,
-            Material.WHITE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX);
+            Material.WHITE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX, Material.STONE_BUTTON, Material.STONE_PLATE);
 
     private static final List<EntityType> PROTECTED_ENTITIES = Arrays.asList(EntityType.ARMOR_STAND, EntityType.ITEM_FRAME,
             EntityType.PAINTING, EntityType.ENDER_CRYSTAL);
