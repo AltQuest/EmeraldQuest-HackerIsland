@@ -101,6 +101,10 @@ public class EntityEvents implements Listener {
 	//this adds a bonus to new players of whatever the land price is @bitcoinjake09
 	if(!(EmeraldQuest.REDIS.exists("name:"+player.getUniqueId().toString()))) {
 		emeraldQuest.addEmeralds(player,(EmeraldQuest.LAND_PRICE));
+		Location location = Bukkit
+                                .getServer()
+                                .getWorld("world").getSpawnLocation();
+                        player.teleport(location);
 	}
 
         EmeraldQuest.REDIS.set("name:"+player.getUniqueId().toString(),player.getName());
@@ -356,7 +360,7 @@ public class EntityEvents implements Listener {
                     player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
                     World world=Bukkit.getWorld("world");
 
-                    final Location spawn=world.getHighestBlockAt(world.getSpawnLocation()).getLocation();
+                    final Location spawn=world.getSpawnLocation();
 
                     Chunk c = spawn.getChunk();
                     if (!c.isLoaded()) {
