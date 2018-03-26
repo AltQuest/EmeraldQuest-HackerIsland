@@ -294,7 +294,9 @@ while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
                 player.closeInventory();
 
                 player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
-                Chunk c = new Location(emeraldQuest.getServer().getWorld("world"), x, 74, z).getChunk();
+                Chunk c = Bukkit
+                                .getServer()
+                                .getWorld("world").getSpawnLocation().getChunk();
                 if (!c.isLoaded()) {
                     c.load();
                 }
@@ -305,8 +307,7 @@ while (clicked.getAmount() > 0){ clicked.setAmount(clicked.getAmount() - 1);}
                     public void run() {
                         Location location = Bukkit
                                 .getServer()
-                                .getWorld("world")
-                                .getHighestBlockAt(tx, tz).getLocation();
+                                .getWorld("world").getSpawnLocation();
                         player.teleport(location);
                         player.removeMetadata("teleporting", emeraldQuest);
                     }
