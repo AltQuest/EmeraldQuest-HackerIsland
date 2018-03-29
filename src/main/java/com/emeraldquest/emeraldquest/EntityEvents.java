@@ -284,8 +284,7 @@ public class EntityEvents implements Listener {
                  }
              }
 
-	}
-
+	} 
     }
 
     @EventHandler
@@ -319,6 +318,40 @@ public class EntityEvents implements Listener {
     @EventHandler
     public void onClick(PlayerInteractEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
 
+	//start pressure plate spawns below \/ \/
+	Location loc = event.getPlayer().getLocation();
+	World world = Bukkit.getWorld("world");
+	final Location SpawnToHIsland=world.getSpawnLocation();
+            SpawnToHIsland.setX(28);
+            SpawnToHIsland.setZ(-15);
+            SpawnToHIsland.setY(75);
+	
+if(((event.getAction().equals(Action.PHYSICAL) && (event.getClickedBlock().getType() == Material.WOOD_PLATE))&&(loc==SpawnToHIsland)))
+	{
+
+			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to your Hacker Island!");
+                                event.getPlayer().setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
+
+
+                                final Location HIsland=world.getSpawnLocation();
+            HIsland.setX(100453);
+            HIsland.setZ(100544);
+            HIsland.setY(65);
+
+                                Chunk c = HIsland.getChunk();
+                                if (!c.isLoaded()) {
+                                    c.load();
+                                }
+                                emeraldQuest.getServer().getScheduler().scheduleSyncDelayedTask(emeraldQuest, new Runnable() {
+
+                                    public void run() {
+                                        event.getPlayer().teleport(HIsland);
+                                        event.getPlayer().removeMetadata("teleporting", emeraldQuest);
+                                    }
+                                }, 60L);	
+	}	//end WOOD_PLATE
+
+
         if (event.getItem() != null) {
             final Player player=event.getPlayer();
                 if (event.getItem().getType() == Material.EYE_OF_ENDER) {
@@ -328,7 +361,7 @@ public class EntityEvents implements Listener {
                                 // TODO: tp player home
                                 player.sendMessage(ChatColor.GREEN + "Teleporting to your bed...");
                                 player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
-                                World world = Bukkit.getWorld("world");
+
 
                                 final Location spawn = player.getBedSpawnLocation();
 
@@ -358,7 +391,7 @@ public class EntityEvents implements Listener {
                     // TODO: open the tps inventory
                     player.sendMessage(ChatColor.GREEN+"Teleporting to Emerald City...");
                     player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
-                    World world=Bukkit.getWorld("world");
+
 
                     final Location spawn=world.getSpawnLocation();
 
