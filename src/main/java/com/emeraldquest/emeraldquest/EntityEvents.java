@@ -322,11 +322,15 @@ public class EntityEvents implements Listener {
 	Location loc = event.getPlayer().getLocation();
 	World world = Bukkit.getWorld("world");
 	final Location SpawnToHIsland=world.getSpawnLocation();
-            SpawnToHIsland.setX(28);
-            SpawnToHIsland.setZ(-15);
-            SpawnToHIsland.setY(75);
-	
-if(((event.getAction().equals(Action.PHYSICAL) && (event.getClickedBlock().getType() == Material.WOOD_PLATE))&&(loc==SpawnToHIsland)))
+
+// Location{world=CraftWorld{name=world},x=29.0,y=74.0,z=-14.0,pitch=0.0,yaw=0.0}
+// Location{world=CraftWorld{name=world},x=29.0,y=74.0,z=-14.0,pitch=0.0,yaw=0.0}
+
+    	    SpawnToHIsland.setX(29);
+            SpawnToHIsland.setY(74);
+            SpawnToHIsland.setZ(-14);//x=29.0,y=74.0,z=-14.0
+	            //System.out.println("hackerisland is: "+SpawnToHIsland+" "+event.getPlayer() + " Location "+event.getPlayer().getLocation() + "item: "+event.getClickedBlock().getLocation());
+if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.WOOD_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
 	{
 
 			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to your Hacker Island!");
