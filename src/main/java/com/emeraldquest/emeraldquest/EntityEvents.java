@@ -104,15 +104,30 @@ public class EntityEvents implements Listener {
 		Location location = Bukkit
                                 .getServer()
                                 .getWorld("world").getSpawnLocation();
+
+    	    location.setX(5);
+            location.setY(74);
+            location.setZ(0);
                         player.teleport(location);
+	player.getInventory().addItem(new ItemStack(Material.COMPASS,1));
+        player.sendMessage(ChatColor.GREEN + "Use a Compass to Teleport back here to spawn.");
 	}
 
         EmeraldQuest.REDIS.set("name:"+player.getUniqueId().toString(),player.getName());
         EmeraldQuest.REDIS.set("uuid:"+player.getName().toString(),player.getUniqueId().toString());
         if(EmeraldQuest.REDIS.sismember("banlist",event.getPlayer().getUniqueId().toString())) {
+	    Location location = Bukkit
+                                .getServer()
+                                .getWorld("world").getSpawnLocation();
+
+    	    location.setX(100350);
+            location.setY(69);
+            location.setZ(100540);
+                        player.teleport(location);
+        }
+        if(EmeraldQuest.REDIS.sismember("permbanlist",event.getPlayer().getUniqueId().toString())) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER,PROBLEM_MESSAGE);
         }
-       
 	
 
     }
@@ -243,11 +258,35 @@ public class EntityEvents implements Listener {
         event.getEnchanter().setLevel(event.getEnchanter().getLevel() + event.whichButton() + 1);
         
     }
+    public boolean isHackerLeavingIsland(Location location)
+	{
+		int playerx=(int)location.getX();
+                int playerz=(int)location.getZ();
+	        //System.out.println("x:"+playerx+" z:"+playerz);  //for testing lol
+	if (!((playerx<100447)&&(playerx>100256)))return true;
+	else if(!((playerz<100639)&&(playerz>100448)))return true;
 
+               return false;//not
+	}
 
     @EventHandler
     public void onPlayerMove(PlayerMoveEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+//need to check when leaving "hacker island" and tp back to it
+//x1-100447 x2-100256 z1-100639 z2-100448
 
+	if (EmeraldQuest.REDIS.sismember("banlist",event.getPlayer().getUniqueId().toString())){
+		if (isHackerLeavingIsland(event.getPlayer().getLocation())==true)
+		{
+		Location location = Bukkit
+                                .getServer()
+                                .getWorld("world").getSpawnLocation();
+
+    	    location.setX(100350);
+            location.setY(69);
+            location.setZ(100540);
+                        event.getPlayer().teleport(location);
+       
+	}}
 	if((emeraldQuest.isPvP(event.getPlayer().getLocation())==true)&&(pvar==0)) {event.getPlayer().sendMessage(ChatColor.RED+"IN PVP ZONE");pvar++;}
         if(event.getFrom().getChunk()!=event.getTo().getChunk()) {
 		pvar = 0;
@@ -316,7 +355,7 @@ public class EntityEvents implements Listener {
     }
 
     @EventHandler
-    public void onClick(PlayerInteractEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
+public void onClick(PlayerInteractEvent event) throws ParseException, org.json.simple.parser.ParseException, IOException {
 
 	//start pressure plate spawns below \/ \/
 	Location loc = event.getPlayer().getLocation();
@@ -333,7 +372,7 @@ public class EntityEvents implements Listener {
 if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.WOOD_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
 	{
 
-			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to your Hacker Island!");
+			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to Hacker Island!");
                                 event.getPlayer().setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
 
 
@@ -355,7 +394,6 @@ if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Mate
                                 }, 60L);	
 	}	//end WOOD_PLATE
 
-
         if (event.getItem() != null) {
             final Player player=event.getPlayer();
                 if (event.getItem().getType() == Material.EYE_OF_ENDER) {
@@ -368,6 +406,18 @@ if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Mate
 
 
                                 final Location spawn = player.getBedSpawnLocation();
+				if (EmeraldQuest.REDIS.sismember("banlist",event.getPlayer().getUniqueId().toString())){
+		spawn.setWorld(Bukkit
+                                .getServer()
+                                .getWorld("world"));
+
+    	    spawn.setX(100350);
+            spawn.setY(69);
+            spawn.setZ(100540);
+
+    
+	}
+
 
                                 Chunk c = spawn.getChunk();
                                 if (!c.isLoaded()) {
@@ -396,8 +446,19 @@ if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Mate
                     player.sendMessage(ChatColor.GREEN+"Teleporting to Emerald City...");
                     player.setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
 
+		final Location spawn = world.getSpawnLocation();
+				if (EmeraldQuest.REDIS.sismember("banlist",event.getPlayer().getUniqueId().toString())){
+		spawn.setWorld(Bukkit
+                                .getServer()
+                                .getWorld("world"));
 
-                    final Location spawn=world.getSpawnLocation();
+    	    spawn.setX(100350);
+            spawn.setY(69);
+            spawn.setZ(100540);
+
+    
+	}
+                   
 
                     Chunk c = spawn.getChunk();
                     if (!c.isLoaded()) {
@@ -416,13 +477,12 @@ if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Mate
         }
 
     }
-
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {
         event.setKeepInventory(true);
         event.setKeepLevel(true);
         event.setDeathMessage(null);
-
+	
     }
     @EventHandler
 
@@ -881,3 +941,4 @@ if (whatLoot<=4){
 	}
 
 }
+

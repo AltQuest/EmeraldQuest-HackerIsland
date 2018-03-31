@@ -171,6 +171,7 @@ public class  EmeraldQuest extends JavaPlugin {
         modCommands.put("crashTest", new CrashtestCommand(this));
         modCommands.put("mod", new ModCommand());
         modCommands.put("ban", new BanCommand());
+        modCommands.put("permban", new PermbanCommand());
         modCommands.put("unban", new UnbanCommand());
         modCommands.put("banlist", new BanlistCommand());
         modCommands.put("spectate", new SpectateCommand(this));
@@ -213,9 +214,9 @@ public class  EmeraldQuest extends JavaPlugin {
             World world = Bukkit.getWorld("world");
 
             Location location=world.getSpawnLocation();
-            location.setX(location.getX()+EmeraldQuest.rand(0,64)-32);
-            location.setZ(location.getZ()+EmeraldQuest.rand(0,64)-32);
-            location.setY(location.getWorld().getHighestBlockYAt(location.getBlockX(),location.getBlockY()));
+            location.setX(5);
+            location.setY(74);
+            location.setZ(0);
 
             final Location spawn=location;
 
@@ -260,8 +261,8 @@ public class  EmeraldQuest extends JavaPlugin {
             @Override
             public void run() {
                 // A villager is born
-                World world=Bukkit.getWorld("world");
-                world.spawnEntity(world.getHighestBlockAt(world.getSpawnLocation()).getLocation(), EntityType.VILLAGER);
+               // World world=Bukkit.getWorld("world");
+               // world.spawnEntity(world.getHighestBlockAt(world.getSpawnLocation()).getLocation(), EntityType.VILLAGER);
             }
         }, 0, 72000L);
         scheduler.scheduleSyncRepeatingTask(this, new Runnable() {
@@ -404,7 +405,7 @@ public class  EmeraldQuest extends JavaPlugin {
         // base health=6
         // level health max=
         int health=8+(player.getLevel()/2);
-	if (isModerator(player)){health=20+(player.getLevel()/2);}
+	if (isModerator(player)&&(EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("true"))){health=20+(player.getLevel()/2);}
         if(health>40) health=40;
         // player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, player.getLevel(), true));
         player.setMaxHealth(health);
