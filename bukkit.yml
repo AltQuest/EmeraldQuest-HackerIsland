@@ -10,7 +10,7 @@
 # Forums: http://www.spigotmc.org/
 # Bug tracker: http://www.spigotmc.org/go/bugs
 
-
+api-version: 1.13
 settings:
   allow-end: true
   warn-on-overload: true
