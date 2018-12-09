@@ -165,6 +165,7 @@ public class  EmeraldQuest extends JavaPlugin {
         commands.put("send", new SendCommand(this));
         commands.put("profession", new ProfessionCommand(this));
         commands.put("spawn", new SpawnCommand(this));
+        //commands.put("vote", new VoteCommand(this));
         modCommands = new HashMap<String, CommandAction>();
         modCommands.put("butcher", new ButcherCommand());
         modCommands.put("killAllVillagers", new KillAllVillagersCommand(this));
@@ -404,7 +405,10 @@ public class  EmeraldQuest extends JavaPlugin {
     public void setPlayerMaxHealth(Player player) {
         // base health=6
         // level health max=
-        int health=8+(player.getLevel()/2);
+	int health=4; 
+	if (player.getLevel()>0) {
+        	health=8+(player.getLevel()/2);
+	}
 	if (isModerator(player)&&(EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("true"))){health=20+(player.getLevel()/2);}
         if(health>40) health=40;
         // player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, player.getLevel(), true));

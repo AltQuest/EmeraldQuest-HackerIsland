@@ -46,13 +46,13 @@ public class InventoryEvents implements Listener {
         trades=new ArrayList<Trade>();
         //trades.add(new Trade(new ItemStack(Material.ANVIL,1),180));
         trades.add(new Trade(new ItemStack(Material.COMPASS,1),1));
-        trades.add(new Trade(new ItemStack(Material.EYE_OF_ENDER,1),1));
+        trades.add(new Trade(new ItemStack(Material.ENDER_EYE,1),1));
         trades.add(new Trade(new ItemStack(Material.COOKED_BEEF,16),16));
         trades.add(new Trade(new ItemStack(Material.ENDER_PEARL,16),32));
-        trades.add(new Trade(new ItemStack(Material.NETHER_STALK,64),16));
+        trades.add(new Trade(new ItemStack(Material.NETHER_WART,64),16));
         trades.add(new Trade(new ItemStack(Material.SAND,64),20));
-        trades.add(new Trade(new ItemStack(Material.SNOW_BALL,16),4));
-        trades.add(new Trade(new ItemStack(Material.WATCH,1),50));
+        trades.add(new Trade(new ItemStack(Material.SNOWBALL,16),4));
+        trades.add(new Trade(new ItemStack(Material.LEGACY_WATCH,1),50));
 	trades.add(new Trade(new ItemStack(Material.PURPLE_SHULKER_BOX,1),500));
         trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),32));
         trades.add(new Trade(new ItemStack(Material.QUARTZ,16),32));
@@ -61,14 +61,14 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.DIAMOND_BLOCK,2),300));
         trades.add(new Trade(new ItemStack(Material.ELYTRA,1),1000));
         trades.add(new Trade(new ItemStack(Material.IRON_BLOCK,4),200));
-        trades.add(new Trade(new ItemStack(Material.EMPTY_MAP,1),10));
-        trades.add(new Trade(new ItemStack(Material.ENCHANTMENT_TABLE,1),250));
+        trades.add(new Trade(new ItemStack(Material.LEGACY_EMPTY_MAP,1),10));
+        trades.add(new Trade(new ItemStack(Material.ENCHANTING_TABLE,1),250));
         trades.add(new Trade(new ItemStack(Material.ENDER_CHEST,1),500));
-        trades.add(new Trade(new ItemStack(Material.FIREWORK,64),100));
+        trades.add(new Trade(new ItemStack(Material.FIREWORK_ROCKET,64),100));
         trades.add(new Trade(new ItemStack(Material.GOLD_BLOCK,4),200));
         trades.add(new Trade(new ItemStack(Material.LAPIS_BLOCK,4),200));
         //trades.add(new Trade(new ItemStack(Material.LAVA_BUCKET,1),50));
-        trades.add(new Trade(new ItemStack(Material.TOTEM,1),2500));
+        trades.add(new Trade(new ItemStack(Material.TOTEM_OF_UNDYING,1),2500));
         //trades.add(new Trade(new ItemStack(Material.NETHER_BRICK,16),200));
         //trades.add(new Trade(new ItemStack(Material.ENDER_STONE,1),100));
         trades.add(new Trade(new ItemStack(Material.NETHER_STAR,1),4500));
@@ -77,7 +77,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.SPONGE,4),100));
         trades.add(new Trade(new ItemStack(Material.SEA_LANTERN,2),50));
         trades.add(new Trade(new ItemStack(Material.SLIME_BALL,2),50));
-        trades.add(new Trade(new ItemStack(Material.SILVER_GLAZED_TERRACOTTA,16),100));
+        //trades.add(new Trade(new ItemStack(Material.SILVER_GLAZED_TERRACOTTA,16),100));
         trades.add(new Trade(new ItemStack(Material.RED_GLAZED_TERRACOTTA,16),100));
         trades.add(new Trade(new ItemStack(Material.PURPLE_GLAZED_TERRACOTTA, 16),100));
         trades.add(new Trade(new ItemStack(Material.PINK_GLAZED_TERRACOTTA,16),100));
@@ -94,8 +94,8 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.WHITE_GLAZED_TERRACOTTA,16),100));
-        trades.add(new Trade(new ItemStack(Material.EXP_BOTTLE,16),200));
-	trades.add(new Trade(new ItemStack(Material.MONSTER_EGG, 1, (short)120),1000));
+        trades.add(new Trade(new ItemStack(Material.LEGACY_EXP_BOTTLE,16),200));
+	trades.add(new Trade(new ItemStack(Material.VILLAGER_SPAWN_EGG, 1, (short)120),1000));
 
 
     }
@@ -183,7 +183,7 @@ public class InventoryEvents implements Listener {
 		}} else {
                 // player sells (experimental) for emerald blocks = to items sold @bitcoinjake09
                final ItemStack clicked = event.getCurrentItem();
-                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
+                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.LEGACY_WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
                     BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                     System.out.println("[sell] " + player.getName() + " <- " +clicked.getAmount()+" "+ clicked.getType());
                     player.sendMessage(ChatColor.YELLOW + "Selling " +clicked.getAmount()+" "+ clicked.getType() + "...");
@@ -222,7 +222,7 @@ public class InventoryEvents implements Listener {
 				if(phasOpenSlots==true){
 			
 					
-    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOW_BALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.EYE_OF_ENDER) {
+    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.LEGACY_WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
                                     player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getType()+" silly!!!");
 
                                 } else{

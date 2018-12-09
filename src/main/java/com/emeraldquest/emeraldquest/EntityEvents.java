@@ -59,15 +59,14 @@ public class EntityEvents implements Listener {
 
 
     private static final List<Material> PROTECTED_BLOCKS = Arrays.asList(Material.CHEST, Material.ACACIA_DOOR,
-	    Material.BIRCH_DOOR,Material.DARK_OAK_DOOR, Material.JUNGLE_DOOR, Material.SPRUCE_DOOR,
-	    Material.WOOD_DOOR, Material.WOODEN_DOOR, Material.FURNACE, Material.BURNING_FURNACE,
-            Material.ACACIA_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.FENCE_GATE,
+	    Material.BIRCH_DOOR,Material.DARK_OAK_DOOR, Material.JUNGLE_DOOR, Material.SPRUCE_DOOR, Material.LEGACY_WOODEN_DOOR, Material.FURNACE,
+            Material.ACACIA_FENCE_GATE, Material.BIRCH_FENCE_GATE, Material.DARK_OAK_FENCE_GATE, Material.LEGACY_FENCE_GATE,
             Material.JUNGLE_FENCE_GATE, Material.SPRUCE_FENCE_GATE, Material.DISPENSER, Material.DROPPER,
             Material.BLACK_SHULKER_BOX, Material.BLUE_SHULKER_BOX, Material.BROWN_SHULKER_BOX, Material.CYAN_SHULKER_BOX,
             Material.GRAY_SHULKER_BOX, Material.GREEN_SHULKER_BOX, Material.LIGHT_BLUE_SHULKER_BOX,
             Material.LIME_SHULKER_BOX, Material.MAGENTA_SHULKER_BOX, Material.ORANGE_SHULKER_BOX,
-            Material.PINK_SHULKER_BOX, Material.PURPLE_SHULKER_BOX, Material.RED_SHULKER_BOX, Material.SILVER_SHULKER_BOX,
-            Material.WHITE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX, Material.STONE_BUTTON, Material.STONE_PLATE);
+            Material.PINK_SHULKER_BOX, Material.PURPLE_SHULKER_BOX, Material.RED_SHULKER_BOX,
+            Material.WHITE_SHULKER_BOX, Material.YELLOW_SHULKER_BOX, Material.STONE_BUTTON, Material.LEGACY_STONE_PLATE);
 
     private static final List<EntityType> PROTECTED_ENTITIES = Arrays.asList(EntityType.ARMOR_STAND, EntityType.ITEM_FRAME,
             EntityType.PAINTING, EntityType.ENDER_CRYSTAL);
@@ -369,7 +368,7 @@ public void onClick(PlayerInteractEvent event) throws ParseException, org.json.s
             SpawnToHIsland.setY(74);
             SpawnToHIsland.setZ(-14);//x=29.0,y=74.0,z=-14.0
 	            //System.out.println("hackerisland is: "+SpawnToHIsland+" "+event.getPlayer() + " Location "+event.getPlayer().getLocation() + "item: "+event.getClickedBlock().getLocation());
-if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.WOOD_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
+if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.LEGACY_WOOD_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
 	{
 
 			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to Hacker Island!");
@@ -396,7 +395,7 @@ if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Mate
 
         if (event.getItem() != null) {
             final Player player=event.getPlayer();
-                if (event.getItem().getType() == Material.EYE_OF_ENDER) {
+                if (event.getItem().getType() == Material.LEGACY_EYE_OF_ENDER) {
                     if (!player.hasMetadata("teleporting")) {
                         if (event.getAction() == Action.RIGHT_CLICK_AIR || event.getAction() == Action.RIGHT_CLICK_BLOCK) {
                             if (player.getBedSpawnLocation() != null) {
@@ -760,7 +759,7 @@ if (whatLoot<=4){
         if (!(entity instanceof Skeleton)) {
             Material sword_material = null;
             if (EmeraldQuest.rand(0, 16) < level) sword_material = Material.IRON_AXE;
-            if (EmeraldQuest.rand(0, 32) < level) sword_material = Material.WOOD_SWORD;
+            if (EmeraldQuest.rand(0, 32) < level) sword_material = Material.LEGACY_WOOD_SWORD;
             if (EmeraldQuest.rand(0, 64) < level) sword_material = Material.IRON_SWORD;
             if (EmeraldQuest.rand(0, 128) < level) sword_material = Material.DIAMOND_SWORD;
             if(sword_material!=null) {
