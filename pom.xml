@@ -4,10 +4,10 @@
         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <!--Compilation config-->
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.bitquest.bitquest</groupId>
-    <artifactId>BitQuest</artifactId>
+    <groupId>com.emeraldquest.emeraldquest</groupId>
+    <artifactId>EmeraldQuest</artifactId>
     <packaging>jar</packaging>
-    <!--Version of bitQuest-->
+    <!--Version of emeraldQuest-->
     <version>2.0</version>
     <!--Package information-->
     <name>EmeraldQuest</name>
@@ -31,14 +31,14 @@
                 <artifactId>maven-assembly-plugin</artifactId>
                 <version>3.0.0</version>
                 <configuration>
-                    <finalName>BitQuest</finalName>
+                    <finalName>EmeraldQuest</finalName>
                     <descriptorRefs>
                         <descriptorRef>jar-with-dependencies</descriptorRef>
                     </descriptorRefs>
                     <appendAssemblyId>false</appendAssemblyId>
                     <archive>
                         <manifest>
-                            <mainClass>com.bitquest.bitquest</mainClass>
+                            <mainClass>com.emeraldquest.emeraldquest</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
