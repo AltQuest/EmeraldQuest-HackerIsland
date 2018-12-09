@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM openjdk:8
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
@@ -11,7 +11,7 @@ RUN mkdir -p /spigot/plugins
 WORKDIR /spigot
 
 # DOWNLOAD AND BUILD SPIGOT
-ADD https://hub.spigotmc.org/jenkins/job/BuildTools/64/artifact/target/BuildTools.jar /tmp/BuildTools.jar
+ADD https://hub.spigotmc.org/jenkins/job/BuildTools/lastSuccessfulBuild/artifact/target/BuildTools.jar /tmp/BuildTools.jar
 RUN export SHELL=/bin/bash && cd /tmp && java -jar BuildTools.jar --rev 1.12.2
 RUN cp /tmp/Spigot/Spigot-Server/target/spigot-*.jar /spigot/spigot.jar
 RUN cd /spigot && echo "eula=true" > eula.txt
