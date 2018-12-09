@@ -1,4 +1,4 @@
-FROM debian:stretch
+FROM openjdk:8
 ENV DEBIAN_FRONTEND noninteractive
 
 RUN apt-get update
