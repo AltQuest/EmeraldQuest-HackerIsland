@@ -19,7 +19,7 @@ public class ModCommand extends CommandAction {
                 UUID uuid=UUID.fromString(EmeraldQuest.REDIS.get("uuid:"+args[1]));
                 EmeraldQuest.REDIS.sadd("moderators",uuid.toString());
                 sender.sendMessage(ChatColor.GREEN+EmeraldQuest.REDIS.get("name:"+uuid)+" added to moderators group");
-
+		EmeraldQuest.REDIS.set("ModFlag "+uuid.toString(),"false");
                 return true;
             } else {
                 sender.sendMessage(ChatColor.RED+"Cannot find player "+args[1]);
@@ -42,12 +42,16 @@ public class ModCommand extends CommandAction {
             return true;
         } else if(args[0].equals("flag")) {
 	try{
-         if (!(EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString()))){
+	if (!(EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString()))){
+		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"true");
+		player.sendMessage(ChatColor.RED + "ModFlag is ON");
+	 }         
+	else if (EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("false")){
 		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"true");
 		player.sendMessage(ChatColor.RED + "ModFlag is ON");
            }
 	 else {
-		EmeraldQuest.REDIS.del("ModFlag "+player.getUniqueId().toString());
+		EmeraldQuest.REDIS.set("ModFlag "+player.getUniqueId().toString(),"false");
 		player.sendMessage(ChatColor.RED + "ModFlag is OFF");
            }
 		} catch (NullPointerException nullPointer)
