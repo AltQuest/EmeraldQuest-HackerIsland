@@ -390,7 +390,7 @@ public class  EmeraldQuest extends JavaPlugin {
         return progress;
     }
     public void setTotalExperience(Player player) {
-        int rawxp=0;
+	int rawxp=0;
         if(EmeraldQuest.REDIS.exists("experience.raw."+player.getUniqueId().toString())) {
             rawxp=Integer.parseInt(EmeraldQuest.REDIS.get("experience.raw."+player.getUniqueId().toString()));
         }
@@ -406,10 +406,12 @@ public class  EmeraldQuest extends JavaPlugin {
         // base health=6
         // level health max=
 	int health=4; 
-	if (player.getLevel()>0) {
-        	health=8+(player.getLevel()/2);
+	if (player.getLevel()>=1) {
+        	health=4+(player.getLevel()/2);
 	}
-	if (isModerator(player)&&(EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("true"))){health=20+(player.getLevel()/2);}
+	if (EmeraldQuest.REDIS.exists("ModFlag "+player.getUniqueId().toString())) {
+	if (isModerator(player)&&(EmeraldQuest.REDIS.get("ModFlag "+player.getUniqueId().toString()).equals("true"))){health=20+(player.getLevel()/2); }
+	} 
         if(health>40) health=40;
         // player.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, player.getLevel(), true));
         player.setMaxHealth(health);
@@ -675,15 +677,16 @@ public boolean canBuild(Location location, Player player) {
         return true;
     }
 
-    public boolean isModerator(Player player) {
-        if(REDIS.sismember("moderators",player.getUniqueId().toString())) {
-            return true;
-        } else if(ADMIN_UUID!=null && player.getUniqueId().toString().equals(ADMIN_UUID.toString())) {
-            return true;
-        }
-        return false;
-
+     public boolean isModerator(Player player) {
+    if (REDIS.sismember("moderators", player.getUniqueId().toString())) {
+      return true;
+    } else if (ADMIN_UUID != null
+        && player.getUniqueId().toString().equals(ADMIN_UUID.toString())) {
+      return true;
+    } else {
+      return false;
     }
+}
 
 
 

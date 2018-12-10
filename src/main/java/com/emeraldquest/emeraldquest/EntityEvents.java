@@ -134,7 +134,7 @@ public class EntityEvents implements Listener {
 
 
     @EventHandler
-    public void onPlayerJoin(PlayerJoinEvent event) throws IOException, org.json.simple.parser.ParseException, ParseException, JSONException {
+  public void onPlayerJoin(PlayerJoinEvent event) throws IOException, org.json.simple.parser.ParseException, ParseException, JSONException, Exception {
         try {
             final Player player=event.getPlayer();
             // On dev environment, admin gets op. In production, nobody gets op.
@@ -226,6 +226,8 @@ public class EntityEvents implements Listener {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
+        } catch (Exception EXPS) {
+            EXPS.printStackTrace();
         }
 
 
