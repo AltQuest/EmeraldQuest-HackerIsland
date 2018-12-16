@@ -220,6 +220,43 @@ public class EntityEvents implements Listener {
 
 
             }
+		
+	//
+// add extra join features:
+	//Daily reward?
+	int DailyReward = 5;
+	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
+	Date date = new Date();
+	System.out.println(dateFormat.format(date)+" "+player.getUniqueId().toString());
+s("LastLoginDate:"+player.getUniqueId().toString()))) {
+	EmeraldQuest.REDIS.set("LastLoginDate:"+player.getUniqueId().toString(),dateFormat.format(date));
+	emeraldQuest.addEmeralds(player,DailyReward);
+	player.sendMessage(ChatColor.GREEN+"you recived "+DailyReward+" emeralds daily reward!");
+	player.sendMessage(ChatColor.GREEN+"Gain more by login in every day! every consecutive day you will receive an extra bonus!");
+	}
+	else if(EmeraldQuest.REDIS.exists("LastLoginDate:"+player.getUniqueId().toString())) {
+		Date date1 = date;
+		Date date2 = dateFormat.parse(EmeraldQuest.REDIS.get("LastLoginDate:"+player.getUniqueId().toString()));
+		System.out.println(dateFormat.format(date2)+" "+player.getUniqueId().toString());
+		long diff = date1.getTime() - date2.getTime();
+		diff = TimeUnit.MILLISECONDS.toDays(diff);
+		System.out.println ("Days consecutively logged in: " + diff);
+		if (diff>0) {
+		DailyReward=DailyReward*((int)diff);
+		}
+	if (DailyReward>1000) {DailyReward=1000;}
+	emeraldQuest.addEmeralds(player,DailyReward);
+	player.sendMessage(ChatColor.GREEN+"you recived "+DailyReward+" emeralds daily reward!");
+	player.sendMessage(ChatColor.GREEN+"Days consecutively logged in : " + diff);
+	EmeraldQuest.REDIS.set("LastLoginDate:"+player.getUniqueId().toString(),dateFormat.format(date));
+
+
+	} // end else if
+
+
+//
+	//catch from first try...
+		
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (org.json.simple.parser.ParseException e) {
