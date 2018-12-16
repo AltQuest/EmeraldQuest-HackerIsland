@@ -233,7 +233,7 @@ public class EntityEvents implements Listener {
 	DateFormat dateFormat = new SimpleDateFormat("MM/dd/yyyy");
 	Date date = new Date();
 	System.out.println(dateFormat.format(date)+" "+player.getUniqueId().toString());
-s("LastLoginDate:"+player.getUniqueId().toString()))) {
+	if(!(EmeraldQuest.REDIS.exists("LastLoginDate:"+player.getUniqueId().toString()))) {
 	EmeraldQuest.REDIS.set("LastLoginDate:"+player.getUniqueId().toString(),dateFormat.format(date));
 	emeraldQuest.addEmeralds(player,DailyReward);
 	player.sendMessage(ChatColor.GREEN+"you recived "+DailyReward+" emeralds daily reward!");
