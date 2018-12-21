@@ -52,7 +52,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.NETHER_WART,64),16));
         trades.add(new Trade(new ItemStack(Material.SAND,64),20));
         trades.add(new Trade(new ItemStack(Material.SNOWBALL,16),4));
-        trades.add(new Trade(new ItemStack(Material.LEGACY_WATCH,1),50));
+        trades.add(new Trade(new ItemStack(Material.CLOCK,1),50));
 	trades.add(new Trade(new ItemStack(Material.PURPLE_SHULKER_BOX,1),500));
         trades.add(new Trade(new ItemStack(Material.GLOWSTONE_DUST,16),32));
         trades.add(new Trade(new ItemStack(Material.QUARTZ,16),32));
@@ -60,8 +60,9 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.GHAST_TEAR,4),200));
         trades.add(new Trade(new ItemStack(Material.DIAMOND_BLOCK,2),300));
         trades.add(new Trade(new ItemStack(Material.ELYTRA,1),1000));
+	trades.add(new Trade(new ItemStack(Material.PHANTOM_MEMBRANE,1),100));
         trades.add(new Trade(new ItemStack(Material.IRON_BLOCK,4),200));
-        trades.add(new Trade(new ItemStack(Material.LEGACY_EMPTY_MAP,1),10));
+        trades.add(new Trade(new ItemStack(Material.MAP,1),10));
         trades.add(new Trade(new ItemStack(Material.ENCHANTING_TABLE,1),250));
         trades.add(new Trade(new ItemStack(Material.ENDER_CHEST,1),500));
         trades.add(new Trade(new ItemStack(Material.FIREWORK_ROCKET,64),100));
@@ -94,7 +95,7 @@ public class InventoryEvents implements Listener {
         trades.add(new Trade(new ItemStack(Material.BLACK_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.YELLOW_GLAZED_TERRACOTTA,16),100));
 	trades.add(new Trade(new ItemStack(Material.WHITE_GLAZED_TERRACOTTA,16),100));
-        trades.add(new Trade(new ItemStack(Material.LEGACY_EXP_BOTTLE,16),200));
+        trades.add(new Trade(new ItemStack(Material.EXPERIENCE_BOTTLE,16),200));
 	trades.add(new Trade(new ItemStack(Material.VILLAGER_SPAWN_EGG, 1, (short)120),1000));
 
 
@@ -183,7 +184,7 @@ public class InventoryEvents implements Listener {
 		}} else {
                 // player sells (experimental) for emerald blocks = to items sold @bitcoinjake09
                final ItemStack clicked = event.getCurrentItem();
-                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.LEGACY_WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
+                if(clicked!=null && clicked.getType()!=Material.AIR && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.CLOCK && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
                     BukkitScheduler scheduler = Bukkit.getServer().getScheduler();
                     System.out.println("[sell] " + player.getName() + " <- " +clicked.getAmount()+" "+ clicked.getType());
                     player.sendMessage(ChatColor.YELLOW + "Selling " +clicked.getAmount()+" "+ clicked.getType() + "...");
@@ -222,7 +223,7 @@ public class InventoryEvents implements Listener {
 				if(phasOpenSlots==true){
 			
 					
-    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.LEGACY_WATCH && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
+    				if(clicked.getType()!=trades.get(iStack).itemStack.getType() && clicked.getType()!=Material.COOKED_BEEF && clicked.getType()!=Material.SNOWBALL && clicked.getType()!=Material.SAND && clicked.getType()!=Material.COMPASS && clicked.getType()!=Material.PURPLE_SHULKER_BOX && clicked.getType()!=Material.CLOCK && clicked.getType()!=Material.ENDER_PEARL && clicked.getType()!=Material.ENDER_EYE) {
                                     player.sendMessage(ChatColor.RED + "I don't buy "+clicked.getType()+" silly!!!");
 
                                 } else{
