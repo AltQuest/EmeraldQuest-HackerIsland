@@ -420,7 +420,7 @@ public void onClick(PlayerInteractEvent event) throws ParseException, org.json.s
             SpawnToHIsland.setY(74);
             SpawnToHIsland.setZ(-14);//x=29.0,y=74.0,z=-14.0
 	            //System.out.println("hackerisland is: "+SpawnToHIsland+" "+event.getPlayer() + " Location "+event.getPlayer().getLocation() + "item: "+event.getClickedBlock().getLocation());
-if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.LEGACY_WOOD_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
+if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.OAK_PRESSURE_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
 	{
 
 			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to Hacker Island!");
