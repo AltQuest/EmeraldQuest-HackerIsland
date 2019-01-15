@@ -36,6 +36,7 @@ import java.io.InputStreamReader;
 import java.net.URL;
 import java.text.ParseException;
 import java.util.Arrays;
+import java.util.Set;
 import java.util.List;
 import java.util.Map;
 import java.util.Date;
@@ -101,7 +102,10 @@ public class EntityEvents implements Listener {
 
     @EventHandler
     public void onPlayerLogin(PlayerLoginEvent event) {
-        Player player=event.getPlayer();
+	Player player=event.getPlayer();
+
+
+
 	//this adds a bonus to new players of whatever the land price is @bitcoinjake09
 	if(!(EmeraldQuest.REDIS.exists("name:"+player.getUniqueId().toString()))) {
 		emeraldQuest.addEmeralds(player,(EmeraldQuest.LAND_PRICE));
@@ -131,8 +135,7 @@ public class EntityEvents implements Listener {
         }
         if(EmeraldQuest.REDIS.sismember("permbanlist",event.getPlayer().getUniqueId().toString())) {
             event.disallow(PlayerLoginEvent.Result.KICK_OTHER,PROBLEM_MESSAGE);
-        }
-	
+        }	
 
     }
 
@@ -269,7 +272,7 @@ public class EntityEvents implements Listener {
 		}
 	} // end else if
 //
-//catch from first try...	
+//catch from first try...
         } catch (ParseException e) {
             e.printStackTrace();
         } catch (org.json.simple.parser.ParseException e) {
@@ -279,9 +282,6 @@ public class EntityEvents implements Listener {
         } catch (Exception EXPS) {
             EXPS.printStackTrace();
         }
-
-
-
     }
 
 
@@ -411,39 +411,51 @@ public void onClick(PlayerInteractEvent event) throws ParseException, org.json.s
 	//start pressure plate spawns below \/ \/
 	Location loc = event.getPlayer().getLocation();
 	World world = Bukkit.getWorld("world");
-	final Location SpawnToHIsland=world.getSpawnLocation();
 
-// Location{world=CraftWorld{name=world},x=29.0,y=74.0,z=-14.0,pitch=0.0,yaw=0.0}
-// Location{world=CraftWorld{name=world},x=29.0,y=74.0,z=-14.0,pitch=0.0,yaw=0.0}
-
-    	    SpawnToHIsland.setX(29);
-            SpawnToHIsland.setY(74);
-            SpawnToHIsland.setZ(-14);//x=29.0,y=74.0,z=-14.0
-	            //System.out.println("hackerisland is: "+SpawnToHIsland+" "+event.getPlayer() + " Location "+event.getPlayer().getLocation() + "item: "+event.getClickedBlock().getLocation());
-if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.OAK_PRESSURE_PLATE)&&(event.getClickedBlock().getLocation().equals(SpawnToHIsland)))
+	if((event.getClickedBlock() != null)&&(event.getClickedBlock().getType() == Material.OAK_PRESSURE_PLATE)) {
+	Set<String> tpList = EmeraldQuest.REDIS.keys("Teleports *");
+	int tpListSize = tpList.size();
+	String[] tpListNames = new String[tpListSize];
+	for (String tempTpList : tpList) {
+	String[] tempTPname = tempTpList.split(" ",1);
+	String TPname = tempTPname[0];
+	String TpXZY = EmeraldQuest.REDIS.get(tempTpList);
+	String[] arr = TpXZY.split(" ",7);
+	TPname = arr[0];   //name of tp
+	String theCords = arr[1]+" "+arr[2]+" "+arr[3]+" "+arr[4]+" "+arr[5]+" "+arr[6];//fromx, fromz, fromy, tox, toz, toy.
+	String arrCords[] = theCords.split(" ");;//[0]=fromx,[1]=z etc	
+	final Location tempLocation=event.getClickedBlock().getLocation();
+	    tempLocation.setX(Integer.parseInt(arrCords[0]));
+            tempLocation.setZ(Integer.parseInt(arrCords[1]));
+            tempLocation.setY(Integer.parseInt(arrCords[2]));
+      //sender.sendMessage(ChatColor.DARK_RED + EmeraldQuest.REDIS.get(tempTpList));
+		if((event.getClickedBlock().getLocation().getX() == tempLocation.getX())&&(event.getClickedBlock().getLocation().getZ() == tempLocation.getZ())&&(event.getClickedBlock().getLocation().getY() == tempLocation.getY()))
 	{
 
-			event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to Hacker Island!");
-                                event.getPlayer().setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
+		event.getPlayer().sendMessage(ChatColor.GREEN + "Teleporting to " + TPname + "!!!");
+                event.getPlayer().setMetadata("teleporting", new FixedMetadataValue(emeraldQuest, true));
 
 
-                                final Location HIsland=world.getSpawnLocation();
-            HIsland.setX(100453);
-            HIsland.setZ(100544);
-            HIsland.setY(65);
+            final Location tempTpLocation=event.getPlayer().getLocation();
+            tempTpLocation.setX(Integer.parseInt(arrCords[3]));
+            tempTpLocation.setZ(Integer.parseInt(arrCords[4]));
+            tempTpLocation.setY(Integer.parseInt(arrCords[5]));
 
-                                Chunk c = HIsland.getChunk();
+                                Chunk c = tempTpLocation.getChunk();
                                 if (!c.isLoaded()) {
                                     c.load();
                                 }
                                 emeraldQuest.getServer().getScheduler().scheduleSyncDelayedTask(emeraldQuest, new Runnable() {
 
                                     public void run() {
-                                        event.getPlayer().teleport(HIsland);
+                                        event.getPlayer().teleport(tempTpLocation);
                                         event.getPlayer().removeMetadata("teleporting", emeraldQuest);
                                     }
                                 }, 60L);	
-	}	//end WOOD_PLATE
+	}
+
+       } //end for loop
+     } //end wood pressure plate
 
         if (event.getItem() != null) {
             final Player player=event.getPlayer();
