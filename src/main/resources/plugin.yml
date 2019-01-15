@@ -11,6 +11,9 @@ commands:
   transfer:
     description: "Sends your Emeralds to another Player"
     usage: "/transfer <amount> <Player>"
+  createtp:
+    description: "creates tp from mods location or setX, setZ, setY -> to endX, endZ, endY."
+    usage: "/createtp <One_Word_Name> <if blank players location||startX,startZ,startY> <endX,endZ,endY> <del #>"
   ban:
     description: "Adds player to the ban list"
     usage: "/ban <player>"
