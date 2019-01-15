@@ -169,6 +169,7 @@ public class  EmeraldQuest extends JavaPlugin {
         modCommands = new HashMap<String, CommandAction>();
         modCommands.put("butcher", new ButcherCommand());
         modCommands.put("killAllVillagers", new KillAllVillagersCommand(this));
+        modCommands.put("createtp", new CreateTPCommand(this));
         modCommands.put("crashTest", new CrashtestCommand(this));
         modCommands.put("mod", new ModCommand());
         modCommands.put("ban", new BanCommand());
