@@ -160,6 +160,7 @@ public class  EmeraldQuest extends JavaPlugin {
         commands = new HashMap<String, CommandAction>();
 
         commands.put("land", new LandCommand(this));
+	commands.put("home", new HomeCommand(this));
         commands.put("clan", new ClanCommand());
         commands.put("transfer", new TransferCommand(this));
         commands.put("send", new SendCommand(this));
