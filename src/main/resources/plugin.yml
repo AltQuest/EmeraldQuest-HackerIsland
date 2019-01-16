@@ -5,6 +5,9 @@ author: The EmeraldQuest Dev Team
 main: com.emeraldquest.emeraldquest.EmeraldQuest
 description: The EmeraldQuest Open Source Project
 commands:
+  home:
+    description: "teleports you to your last bed"
+    usage: "/home"
   clan:
     description: "used for creating, joining, operating clans"
     usage: "/clan <new|invite|kick|join|leave>"
@@ -26,6 +29,9 @@ commands:
   spectate:
     description: "Allows moderators to spectate players' actions"
     usage: "/spectate <player>"
+  spawn:
+    description: "teleports to spawn"
+    usage: "/spawn"
   mod:
     description: "Utility to add/remove/list moderators"
     usage: "/mod <add|remove|list>"
@@ -38,4 +44,7 @@ commands:
   killAllVillagers:
     description: "Kills all the villagers"
     usage: "/killAllVillagers"
+  send:
+    description: "sends ems to other player"
+    usage: "/send <amount> <player>"
 
