@@ -86,7 +86,7 @@ public class User {
     }
 
     public void setPlayerMaxHealth() {
-        int health=20+new Double(player.getLevel()/6.4).intValue();
+        int health=4+new Double(player.getLevel()/2).intValue();
         if(health>40) health=40;
         player.setMaxHealth(health);
     }
