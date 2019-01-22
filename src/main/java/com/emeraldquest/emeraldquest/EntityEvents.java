@@ -5,6 +5,8 @@ import com.mixpanel.mixpanelapi.MixpanelAPI;
 import org.apache.commons.lang.WordUtils;
 import org.bukkit.*;
 import org.bukkit.block.Block;
+import org.bukkit.block.BlockFace;
+import org.bukkit.material.Attachable;
 import org.bukkit.enchantments.Enchantment;
 import org.bukkit.entity.*;
 import org.bukkit.event.EventHandler;
@@ -14,6 +16,7 @@ import org.bukkit.event.entity.*;
 import org.bukkit.event.entity.CreatureSpawnEvent.SpawnReason;
 import org.bukkit.event.player.*;
 import org.bukkit.event.player.PlayerGameModeChangeEvent;
+import org.bukkit.block.Sign;
 import org.bukkit.inventory.Inventory;
 import org.bukkit.inventory.InventoryHolder;
 import org.bukkit.inventory.ItemStack;
@@ -150,6 +153,9 @@ public class EntityEvents implements Listener {
             player.setGameMode(GameMode.SURVIVAL);
             emeraldQuest.updateScoreboard(player);
             emeraldQuest.setTotalExperience(player);
+            User user=new User(player);	
+	    user.setPlayerMaxHealth();
+	
             final String ip=player.getAddress().toString().split("/")[1].split(":")[0];
             System.out.println("User "+player.getName()+"logged in with IP "+ip);
             EmeraldQuest.REDIS.set("ip"+player.getUniqueId().toString(),ip);
@@ -538,7 +544,33 @@ public void onClick(PlayerInteractEvent event) throws ParseException, org.json.s
                 }
             }
         }
-
+//start chest/sign shops?
+	if (event.getClickedBlock().getType() == Material.WALL_SIGN || event.getClickedBlock().getType() == Material.SIGN) {
+                final Player player=event.getPlayer();
+  		Sign sign = (Sign) event.getClickedBlock().getState();
+		player.sendMessage(ChatColor.GREEN+"BlockClicked: " + event.getClickedBlock());
+	if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+	player.sendMessage(ChatColor.GREEN+"right click, sign text: " + sign.getLine(1));
+	Sign s = (Sign) event.getClickedBlock();
+	Block attachedBlock = event.getClickedBlock().getRelative(((Attachable) s).getAttachedFace());
+	MaterialData signData = sign.getBlock().getState().getData();
+	//Block attachedBlock = event.getClickedBlock().getRelative(sign.getAttachedFace());
+	player.sendMessage(ChatColor.GREEN+"sign block: " + attachedBlock.getData());
+	}
+	else if (event.getAction() == Action.LEFT_CLICK_BLOCK) {
+	player.sendMessage(ChatColor.GREEN+"left click, sign text: " + sign.getLine(2));
+  	Sign s = (Sign) event.getClickedBlock();
+	Block attachedBlock = event.getClickedBlock().getRelative(((Attachable) s).getAttachedFace());
+	MaterialData signData = sign.getBlock().getState().getData();
+	//Block attachedBlock = sign.getBlock().getRelative(((Attachable) signData).getAttachedFace());
+	player.sendMessage(ChatColor.GREEN+"sign block: " + attachedBlock.getData());
+	}
+  // ...
+//  Sign s = (Sign) block.getState().getData();
+//  Block attachedBlock = b.getRelative(s.getAttachedFace());
+//  Block block = location.getBlock().getRelative(sign.getAttachedFace());
+	}
+	
     }
     @EventHandler
     public void onPlayerDeath(PlayerDeathEvent event) {

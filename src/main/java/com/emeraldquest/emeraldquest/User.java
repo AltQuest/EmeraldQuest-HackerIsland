@@ -6,6 +6,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.ChatColor;
 import org.bukkit.entity.Player;
 import org.bukkit.scoreboard.*;
+import org.bukkit.attribute.Attribute;
+import org.bukkit.attribute.*;
+import org.bukkit.entity.LivingEntity;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 
@@ -85,14 +88,51 @@ public class User {
         return bd.floatValue();
     }
 
-    public void setPlayerMaxHealth() {
-        int health=4+new Double(player.getLevel()/2).intValue();
-        if(health>40) health=40;
-        player.setMaxHealth(health);
+  public void setPlayerMaxHealth() {
+    double health=10+(new Double(player.getLevel()/2));
+     if(health>40) health=40;
+	AttributeModifier addMaxHealth = new AttributeModifier(player.getUniqueId(), "GENERIC_MAX_HEALTH",health, AttributeModifier.Operation.ADD_NUMBER);
+	AttributeModifier remMaxHealth = new AttributeModifier(player.getUniqueId(), "GENERIC_MAX_HEALTH",(-1 * player.getMaxHealth()), AttributeModifier.Operation.ADD_NUMBER);
+	player.getAttribute(Attribute.GENERIC_MAX_HEALTH).removeModifier(remMaxHealth);
+	player.getAttribute(Attribute.GENERIC_MAX_HEALTH).addModifier(addMaxHealth);
     }
-   
     private boolean setClan(String tag) {
         // TODO: Write user clan info
         return false;
     }
 }
+
+/*
+AttributeModifier​(java.lang.String name, double amount, AttributeModifier.Operation operation)
+ 	 
+AttributeModifier​(java.util.UUID uuid, java.lang.String name, double amount, AttributeModifier.Operation operation) 	 
+
+AttributeModifier​(java.util.UUID uuid, java.lang.String name, double amount, AttributeModifier.Operation operation, EquipmentSlot slot) 	
+	for (AttributeModifier.Operation c : AttributeModifier.Operation.values())
+ADD_NUMBER
+ADD_SCALAR
+MULTIPLY_SCALAR_1
+
+	for (Attribute a : Attribute.values())
+GENERIC_MAX_HEALTH
+GENERIC_FOLLOW_RANGE
+GENERIC_KNOCKBACK_RESISTANCE
+GENERIC_MOVEMENT_SPEED
+GENERIC_FLYING_SPEED
+GENERIC_ATTACK_DAMAGE
+GENERIC_ATTACK_SPEED
+GENERIC_ARMOR
+GENERIC_ARMOR_TOUGHNESS
+GENERIC_LUCK
+HORSE_JUMP_STRENGTH
+ZOMBIE_SPAWN_REINFORCEMENTS
+
+for (Attribute attribute : Attribute.values()) {
+        if (player.getAttribute(attribute) == null) continue;
+        for (AttributeModifier modifier : player.getAttribute(attribute).getModifiers()) {
+            player.getAttribute(attribute).removeModifier(modifier);
+	        System.out.println("attribute: "+attribute);
+	        System.out.println("modifier: "+modifier);
+modifier: AttributeModifier{uuid=80907248-4835-4f8a-9f89-e92078d5d135, name=generic.maxHealth, operation=ADD_NUMBER, amount=8.0, slot=}
+
+*/
