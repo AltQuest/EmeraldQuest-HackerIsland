@@ -23,23 +23,17 @@ Every time a player kills an enemy (mob) there is a chance to get loot. If that 
 ![A player got loot](https://media.discordapp.net/attachments/417463752301215770/418991008492290048/EmeraldQuest04.png?width=400&height=225)
 
 ## Everyone can send emerald anywhere
-once fixed...
-You can send emerald to any player with /transfer:
-```sh
-/transfer <amount> <username>
-```
-![Player using transfer command](http://i.imgur.com/Vlf9C1F.png)
-![Player notification](http://i.imgur.com/PHmomoS.png)
-![Player's public transaction](http://i.imgur.com/JPO4AXt.png)  
-
-Additionally, players can send emerald to other players via /send:
+You can send emerald to any player with /send:
 ```sh
 /send <amount> <username>
 ```
-Pictures will be updated once fixed, but same concept.
+![Player using send command](https://media.discordapp.net/attachments/417463752301215770/537438811764948993/EmSend.png?width=400&height=239)
 
 ## Server loot
 The EmeraldQuest server creates emerald loot randomly upon mob death, used for giving Loot to players.
+
+## Daily Rewards!
+The EmeraldQuest server will give each player 5e + (5e * consecutive login days) upon login every 24 hours.
 
 ## About the back-end technology
 
