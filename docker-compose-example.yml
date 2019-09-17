@@ -11,11 +11,14 @@ spigot:
     - SET_PvP=true
   build: .
   volumes:
-    - "./build/libs/:/spigot/plugins"
-    - ".:/emeraldquest"
+    - "/EmeraldQuest/spigot/world:/spigot/world"
+    - "/EmeraldQuest/spigot/world_nether:/spigot/world_nether"
+    - "/EmeraldQuest/spigot/world_the_end:/spigot/world_the_end"
   ports:
-    - "25565:25565"
+    - "25564:25564"
   links:
     - redis
 redis:
   image: redis
+  volumes:
+    - "/EmeraldQuest/redis:/data/"
